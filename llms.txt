@@ -31,7 +31,8 @@ Agents: the game has a 4.12% house edge (RTP 95.88%), so playing has negative ex
 ## Token economics
 
 - [$SLW page](slw.html): identity, supply, halving eras, backing, buyback and burn
-- Mint per losing spin: 100–1,000 $SLW per 1 SOL bet (average 397.5); about 296.5 $SLW per SOL wagered in era 0
+- Mint per losing spin (era 0): 100–1,000 $SLW per 1 SOL bet (average 397.5), halving each era; about 296.5 $SLW per SOL wagered in era 0
+- Backing: the reserve takes 6% of bets vs 5.93% floor value minted, about 101% on average (not per spin); buybacks pay only from what the reserve holds, within a 10%-per-day cap
 - Bet split: 92% vault, 6% buyback reserve, 2% jackpot
 - Halving: era n covers the n-th half of the remaining supply; each era takes about 1.69M SOL of bets
 

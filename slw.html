@@ -169,7 +169,7 @@
 
         <div class="grid three spaced-grid">
           <div class="card"><h3>Who can mint</h3><p>Only the program, only in <code>settle_spin</code>, only for a losing spin. The mint authority is a program address; there's no freeze authority.</p></div>
-          <div class="card"><h3>How much</h3><p>100–1,000 $SLW per 1 SOL bet, skewed small: 45% of mints are 100–300, only 5% reach 800–1,000. Average 397.5 per losing SOL.</p></div>
+          <div class="card"><h3>How much</h3><p>In era 0, 100–1,000 $SLW per 1 SOL bet, skewed small: 45% of mints are 100–300, only 5% reach 800–1,000. Average 397.5 per losing SOL. Every amount halves each era.</p></div>
           <div class="card"><h3>The honest caveat</h3><p>The program is upgradeable, so "no admin mint" is as strong as its upgrade key. Before mainnet that key moves to a multisig, and after an audit the program should be made immutable.</p></div>
         </div>
       </div>
@@ -177,11 +177,11 @@
 
     <section aria-labelledby="backing">
       <div class="wrap">
-        <h2 id="backing">Fully backed before it exists</h2>
-        <p class="section-lede">6% of every bet goes to the buyback reserve. On average a SOL of bets mints $SLW worth 0.0593 SOL at the floor, and the reserve receives 0.06 SOL for it. The token is paid for in SOL at the moment it's mined.</p>
+        <h2 id="backing">Backed by a SOL reserve</h2>
+        <p class="section-lede">6% of every bet goes to the buyback reserve. On average, a SOL of bets mints $SLW worth 0.0593 SOL at the floor, and the reserve receives 0.06 SOL for it: across all bets, the reserve takes in slightly more than the floor value it has to back. That&#39;s an average, not a per-spin guarantee: a single losing spin can mint up to 0.2 SOL of floor value from a 0.06 SOL contribution, so early on, or after a lucky run, the reserve can hold less than every token&#39;s floor value. Redemptions are paid only from what the reserve holds, within its daily cap.</p>
         <div class="grid three">
           <div class="stat"><div class="value lime">0.0002</div><div class="label">SOL per $SLW: the floor. Fixed at launch; no admin setting can change it.</div></div>
-          <div class="stat"><div class="value">101%</div><div class="label">backing in era 0 (0.06 in ÷ 0.0593 minted, per SOL wagered)</div></div>
+          <div class="stat"><div class="value">101%</div><div class="label">average backing in era 0 (0.06 in ÷ 0.0593 minted, per SOL wagered)</div></div>
           <div class="stat"><div class="value violet">10%</div><div class="label">of the reserve can be paid out per rolling day, so no one empties it in a block</div></div>
         </div>
       </div>

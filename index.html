@@ -36,7 +36,7 @@
         <div>
           <p class="eyebrow">On-chain slot on Solana</p>
           <h1>No blanks.<br>Every spin <span class="hl">mines.</span></h1>
-          <p class="lede">A win pays <strong>SOL</strong>. A loss mints <strong>$SLW</strong>: a capped token, paid for in SOL the moment it's mined, that you can always sell back to the reserve at a fixed floor.</p>
+          <p class="lede">A win pays <strong>SOL</strong>. A loss mints <strong>$SLW</strong>: a capped token backed by a SOL reserve that takes 6% of every bet, which you can sell back to that reserve at a fixed floor.</p>
           <div class="cta">
             <a class="btn primary" href="play/">Play the demo <span class="arrow">&rarr;</span></a>
             <a class="btn" href="slw.html">Meet $SLW</a>
@@ -79,7 +79,7 @@
         <div class="grid three">
           <div class="card"><span class="step">BET</span><h3>Your SOL splits three ways</h3><p><code>place_bet</code> sends 92% to the vault, 6% to the $SLW reserve and 2% to the jackpot, and asks MagicBlock for randomness in the same transaction.</p></div>
           <div class="card"><span class="step">PROVE</span><h3>Randomness nobody picks</h3><p>MagicBlock's oracle answers with a VRF proof. The VRF program checks it and calls <code>settle_spin</code>. Nobody, us included, can choose the result.</p></div>
-          <div class="card"><span class="step">PAY / MINE</span><h3>No spin comes back empty</h3><p>A win pays SOL straight to your wallet. A loss mints 100–1,000 $SLW per SOL bet. Either way, the reels and amounts are on-chain in <code>SpinSettled</code>.</p></div>
+          <div class="card"><span class="step">PAY / MINE</span><h3>No spin comes back empty</h3><p>A win pays SOL straight to your wallet. A loss mints $SLW: 100–1,000 per SOL bet today, halving each era. Either way, the reels and amounts are on-chain in <code>SpinSettled</code>.</p></div>
         </div>
       </div>
     </section>
