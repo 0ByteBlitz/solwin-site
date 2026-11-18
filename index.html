@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.devnet.solana.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>SolWin: every spin mines</title>
+  <meta name="description" content="SolWin is an on-chain Solana slot where no spin is wasted: every spin pays SOL or mines the $SLW token. Provably random with MagicBlock VRF. Devnet, play money.">
+  <meta name="theme-color" content="#07070d">
+  <link rel="icon" type="image/svg+xml" href="assets/solwin-mark.svg">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="banner"><div class="wrap"><strong>Devnet only, play money.</strong> Nothing here is real-money gambling or an offer to buy anything.</div></div>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="30" height="30">SolWin</a>
+      <nav class="nav" aria-label="Main">
+        <a href="./" aria-current="page">Home</a>
+        <a href="slw.html">$SLW</a>
+        <a href="agents.html">Agents</a>
+        <a href="play/">Play demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">On-chain slot · Solana</p>
+        <h1>Every spin <span class="hl">mines.</span></h1>
+        <p class="lede">A win pays <strong>SOL</strong>. A loss mints <strong>$SLW</strong>, a capped, fully backed token you can sell back to the reserve at a fixed floor. No spin leaves you with nothing.</p>
+        <div class="cta">
+          <a class="btn primary" href="play/">Play the demo</a>
+          <a class="btn" href="slw.html">Meet $SLW</a>
+          <a class="btn" href="agents.html">For AI agents</a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="how">
+      <div class="wrap">
+        <h2 id="how">How a spin works</h2>
+        <p class="section-lede">One transaction from your wallet. The randomness comes from MagicBlock VRF, verified on-chain before the program settles your spin.</p>
+        <div class="grid three">
+          <div class="card"><span class="step">1</span><h3>Bet</h3><p><code>place_bet</code> splits your SOL: 92% to the vault, 6% to the $SLW reserve, 2% to the jackpot. It asks MagicBlock for randomness in the same transaction.</p></div>
+          <div class="card"><span class="step">2</span><h3>Prove</h3><p>MagicBlock's oracle answers with a VRF proof. The VRF program checks the proof and calls <code>settle_spin</code>. Nobody, us included, can pick the result.</p></div>
+          <div class="card"><span class="step">3</span><h3>Pay or mine</h3><p>A win pays SOL straight to your wallet. A loss mints 100–1,000 $SLW per SOL bet. Either way the reels and amounts are on-chain in the <code>SpinSettled</code> event.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="numbers">
+      <div class="wrap">
+        <h2 id="numbers">The numbers, stated plainly</h2>
+        <p class="section-lede">From the exact paytable calculation, checked by a 10M-spin simulation in CI. The house has an edge; we tell you how big.</p>
+        <div class="grid four">
+          <div class="stat"><div class="value lime">95.88%</div><div class="label">Return to player: SOL wins 87.95%, $SLW at floor 5.93%, jackpot 2%</div></div>
+          <div class="stat"><div class="value">4.12%</div><div class="label">House edge. That's the cost of a spin, on average.</div></div>
+          <div class="stat"><div class="value violet">74.6%</div><div class="label">of spins lose, and every one of those mines $SLW</div></div>
+          <div class="stat"><div class="value">1B</div><div class="label">$SLW hard cap, halving per era, 100% mined by play</div></div>
+        </div>
+
+        <h3 class="split-title">Where each bet goes</h3>
+        <div class="split" role="img" aria-label="Bet split: 92% vault, 6% buyback reserve, 2% jackpot">
+          <span class="vault">92% vault</span><span class="reserve">6%</span><span class="jackpot">2%</span>
+        </div>
+        <ul class="legend-list">
+          <li><span class="dot vault"></span><b>Vault 92%</b>: pays SOL wins. The max bet adjusts automatically to what the vault can cover.</li>
+          <li><span class="dot reserve"></span><b>Buyback reserve 6%</b>: backs the $SLW floor. Only <code>buyback</code> can take SOL out, and it burns the tokens.</li>
+          <li><span class="dot jackpot"></span><b>Jackpot 2%</b>: 1 in 50,000 per 1 SOL bet wins the whole pool.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section aria-labelledby="protect">
+      <div class="wrap">
+        <h2 id="protect">Player protection, enforced by the program</h2>
+        <p class="section-lede">Not settings in a web page: rules in the on-chain program that apply to every wallet, human or agent.</p>
+        <div class="grid three">
+          <div class="card"><h3>Limits that stick</h3><p>Daily, weekly and monthly loss limits, a wager limit and a max bet. Lowering is instant; raising waits 24 hours.</p></div>
+          <div class="card"><h3>Cool-off and self-exclusion</h3><p>From one day to permanent. Selling $SLW keeps working while you're excluded, so you can always cash out.</p></div>
+          <div class="card"><h3>New wallets start small</h3><p>0.1 SOL max bet for a wallet's first week, a minimum gap between spins, and a pause switch that can stop new bets but never move funds.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="status">
+      <div class="wrap">
+        <h2 id="status">Where it stands</h2>
+        <div class="grid two">
+          <div class="card">
+            <h3>Devnet program <span class="badge live">Deployed</span></h3>
+            <dl class="kv">
+              <dt>Program</dt><dd><a class="mono" href="https://explorer.solana.com/address/DWxpojSqhShEiLhCqKWmjvAkQYdpBjwpxtVCbeSa2Kso?cluster=devnet" rel="noopener noreferrer">DWxpojSq…Kso</a></dd>
+              <dt>$SLW mint</dt><dd><a class="mono" href="https://explorer.solana.com/address/6bFqxm4DhCweQsRRYokk9Hpmwtkmk7rdWdSikphg5fXt?cluster=devnet" rel="noopener noreferrer">6bFqxm4D…fXt</a></dd>
+              <dt>Randomness</dt><dd>MagicBlock VRF (since 18 Nov 2026)</dd>
+              <dt>Spins</dt><dd>Open once the vault holds 25+ SOL</dd>
+            </dl>
+          </div>
+          <div class="card">
+            <h3>Before mainnet</h3>
+            <p>External audit, multisig for every authority, a gambling licence and legal review. Until then this is a devnet game with play money, and the demo runs off-chain by default.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
+      <p>SolWin runs on Solana devnet with play money. Gambling can be addictive; the program's limits and self-exclusion exist for that reason. Real-money play needs a licence we don't have yet.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="t">
+  <title id="t">$SLW: a lime coin with a rising step, the floor that only moves up</title>
+  <circle cx="64" cy="64" r="62" fill="#c6ff00"/>
+  <circle cx="64" cy="64" r="50" fill="none" stroke="#07070d" stroke-width="4" stroke-opacity="0.85"/>
+  <path d="M34 88 H52 V72 H70 V56 H88 V40" fill="none" stroke="#07070d" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M80 42 L88 34 L96 42" fill="none" stroke="#07070d" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

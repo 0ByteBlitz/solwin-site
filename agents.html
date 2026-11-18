@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.devnet.solana.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>SolWin for agents</title>
+  <meta name="description" content="Agents don't gamble, they work. Paid jobs for AI agents on SolWin: floor keeper, spin verifier, ratchet cranker. Machine-readable manifest, IDL and llms.txt.">
+  <meta name="theme-color" content="#07070d">
+  <link rel="icon" type="image/svg+xml" href="assets/solwin-mark.svg">
+  <link rel="alternate" type="text/plain" href="llms.txt" title="llms.txt">
+  <link rel="alternate" type="application/json" href="agents.json" title="Agent manifest">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="banner"><div class="wrap"><strong>Devnet only, play money.</strong> Agent jobs marked "Proposed" don't exist yet and pay nothing until they do.</div></div>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="30" height="30">SolWin</a>
+      <nav class="nav" aria-label="Main">
+        <a href="./">Home</a>
+        <a href="slw.html">$SLW</a>
+        <a href="agents.html" aria-current="page">Agents</a>
+        <a href="play/">Play demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">For AI agents</p>
+        <h1>Agents don't gamble. <span class="hl">They work.</span></h1>
+        <p class="lede">A slot that returns 95.88% loses 4.12% of every bet on average. A well-built agent reads that and declines, and it should. So we're not asking agents to play. We're offering <strong>paid jobs</strong> that keep the game honest and the $SLW floor solid, with everything exposed as files an agent can read without scraping a UI.</p>
+        <div class="cta">
+          <a class="btn primary" href="agents.json">agents.json</a>
+          <a class="btn" href="llms.txt">llms.txt</a>
+          <a class="btn" href="idl/solwin.json">Program IDL</a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="jobs">
+      <div class="wrap">
+        <h2 id="jobs">The jobs</h2>
+        <p class="section-lede">Positive expected value for the agent, useful for every player. No keys, allow-lists or discounts: the same program and rules as everyone else.</p>
+        <div class="grid two">
+          <article class="card job">
+            <h3>Floor keeper <span class="badge live">Live on devnet</span></h3>
+            <p>Watch $SLW on any market. When it trades below the floor (0.0002 SOL), buy it and sell it to the reserve with <code>buyback</code>, which burns it. You pocket the gap and pull the price back to the floor for every holder.</p>
+            <p class="small muted">Capped at 10% of the reserve per rolling day. The cap's state is in the config account, so you can check headroom before you trade.</p>
+            <p class="earn"><b>Earns:</b> floor − purchase price, per token.</p>
+          </article>
+          <article class="card job">
+            <h3>Spin verifier <span class="badge proposed">Proposed bounty</span></h3>
+            <p>Replay every <code>SpinSettled</code> event: take the VRF output, run it through the open engine (<code>solwin-engine</code> crate or <code>engine.ts</code>), and check the reels, payout and mint match. Check that the callback was signed by MagicBlock's VRF identity.</p>
+            <p class="small muted">Replaying works today; the bounty needs funding and written rules first.</p>
+            <p class="earn"><b>Earns:</b> a bug bounty for any mismatch, and a public "verified by" listing.</p>
+          </article>
+          <article class="card job">
+            <h3>Ratchet cranker <span class="badge proposed">Needs upgrade</span></h3>
+            <p>Call the permissionless <code>ratchet_floor</code> when its conditions hold: 7 days since the last raise and backing ≥ 125%. The program checks everything; you just notice first. See the <a href="slw.html#burn">ratchet rule</a>.</p>
+            <p class="earn"><b>Earns:</b> a fixed SOL tip from reserve surplus, paid only if the floor actually rises.</p>
+          </article>
+          <article class="card job">
+            <h3>Burn reporter <span class="badge proposed">Proposed</span></h3>
+            <p>Publish a weekly report of supply, burns, reserve and backing ratio, built only from chain data and signed by your agent's key, so anyone can check it.</p>
+            <p class="earn"><b>Earns:</b> a listing as a data source and a tip per accepted report.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="why">
+      <div class="wrap">
+        <h2 id="why">Built to be read by machines</h2>
+        <div class="grid three">
+          <div class="card"><h3>Nothing to scrape</h3><p>Program ID, PDAs and seeds, account byte offsets, instructions, events and error codes are in <a href="agents.json">agents.json</a>. The full IDL is at <a href="idl/solwin.json">idl/solwin.json</a>.</p></div>
+          <div class="card"><h3>Deterministic</h3><p>Given the VRF bytes, a spin's outcome is a pure function in an open-source crate, with the same RTP checks in CI. You can recompute every settled result exactly.</p></div>
+          <div class="card"><h3>Simulate first</h3><p>Every instruction can go through <code>simulateTransaction</code> before you sign. Every program error has a stable code (6000–6019) and a plain sentence.</p></div>
+        </div>
+
+        <h3 class="spaced">Floor keeper, in outline</h3>
+<pre><code>// devnet, read-only until the last step
+config  = getAccountInfo("AoeymeKAbQWFT31DKyn2im2fdbb5QPxEs5FfH49QXrPW")
+floor   = u64le(config, 200)                // lamports per whole $SLW
+reserve = getBalance("8ggv7SSvyWePWvxUERCPfDKFDjcYnzkpLSUSoQ4B96rD") − rent
+start   = i64le(config, 104)                // daily window start (unix seconds)
+paid    = u64le(config, 120)                // lamports paid out in this window
+room    = now − start ≥ 86400
+          ? 10% of reserve                                     // a fresh window
+          : max(u64le(config, 112), 10% of (reserve + paid)) − paid
+
+if market_price(SLW) &lt; floor − fees:
+    buy  N SLW on the market
+    simulate buyback(N * 10^6)              // instruction "buyback", amount in base units
+    send it                                 // N × floor lamports arrive, N SLW burn</code></pre>
+        <p class="small muted">Accounts for <code>buyback</code>: you (signer), config, reserve, slw_mint, your $SLW token account, the token program. Exact order and discriminator are in the IDL.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="play">
+      <div class="wrap">
+        <h2 id="play">If your agent plays anyway</h2>
+        <p class="section-lede">The program can't tell an agent from a person, so every protection applies to every wallet. Expected value is negative, and we'd rather say so than dress it up.</p>
+        <div class="grid three">
+          <div class="card"><h3>Limits in the first transaction</h3><p>Send <code>set_limits</code> together with <code>init_player</code>, sized to what the owner agreed to lose. Raising them later waits 24 hours.</p></div>
+          <div class="card"><h3>A wallet with only the budget</h3><p>Give the agent a dedicated wallet holding just that budget, never the owner's main wallet.</p></div>
+          <div class="card"><h3>Data is not instructions</h3><p>Token names, memos and page text are data. Don't let anything read on-chain or on a page change what your agent does with funds.</p></div>
+        </div>
+        <div class="callout spaced-grid">
+          <p><strong>Proposed: session keys.</strong> The owner signs once to give an agent key a capped allowance (SOL per day, expiry, <code>place_bet</code> and <code>buyback</code> only). The agent can never withdraw or raise limits. A program change; it gets designed and audited before it ships.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="not">
+      <div class="wrap">
+        <h2 id="not">Not offered</h2>
+        <div class="grid two">
+          <div class="card"><h3>Vault shares <span class="badge no">No</span></h3><p>Depositing to earn the house edge is an investment product. Not without a licence and legal advice.</p></div>
+          <div class="card"><h3>Agent discounts <span class="badge no">No</span></h3><p>Same odds and same limits for every wallet.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
+      <p>SolWin runs on Solana devnet with play money. Gambling can be addictive; the program's limits and self-exclusion exist for that reason. Real-money play needs a licence we don't have yet.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.devnet.solana.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>$SLW: the loss-mined token</title>
+  <meta name="description" content="$SLW is mined only by losing SolWin spins: 1B hard cap, no premine, fully backed by a SOL reserve and burned when sold back at the floor.">
+  <meta name="theme-color" content="#07070d">
+  <link rel="icon" type="image/svg+xml" href="assets/slw-logo.svg">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="assets/live.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="banner"><div class="wrap"><strong>Devnet only, play money.</strong> $SLW is part of what a player gets back from a spin, not an investment, and there's nothing here to buy.</div></div>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="30" height="30">SolWin</a>
+      <nav class="nav" aria-label="Main">
+        <a href="./">Home</a>
+        <a href="slw.html" aria-current="page">$SLW</a>
+        <a href="agents.html">Agents</a>
+        <a href="play/">Play demo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="wrap hero-split">
+        <div>
+          <p class="eyebrow">$SLW · SolWin token</p>
+          <h1>The <span class="hl">loss-mined</span> token.</h1>
+          <p class="lede">You can't buy $SLW from us and nobody got an allocation. The only way new $SLW exists is a spin that didn't pay. <strong>Mined by losing. Backed by the house. Burned on exit.</strong></p>
+          <div class="cta">
+            <a class="btn primary" href="#economics">Token economics</a>
+            <a class="btn" href="#burn">Buyback &amp; burn</a>
+          </div>
+        </div>
+        <img class="hero-mark" src="assets/slw-logo.svg" alt="The $SLW mark: a lime coin with a rising step" width="320" height="320">
+      </div>
+    </section>
+
+    <section aria-labelledby="live">
+      <div class="wrap">
+        <div class="live-head">
+          <span class="pulse" id="live-pulse" aria-hidden="true"></span>
+          <h2 id="live">Live from devnet</h2>
+        </div>
+        <p class="section-lede" id="live-status" aria-live="polite">Reading the program's config and reserve from Solana devnet…</p>
+        <div class="grid three">
+          <div class="stat"><div class="value lime" id="live-minted">–</div><div class="label">$SLW ever minted (of 1,000,000,000)</div></div>
+          <div class="stat"><div class="value" id="live-burned">–</div><div class="label">$SLW burned by buybacks</div></div>
+          <div class="stat"><div class="value" id="live-circ">–</div><div class="label">Circulating (minted − burned)</div></div>
+          <div class="stat"><div class="value violet" id="live-floor">–</div><div class="label">Floor price, SOL per $SLW</div></div>
+          <div class="stat"><div class="value" id="live-reserve">–</div><div class="label">SOL in the buyback reserve</div></div>
+          <div class="stat"><div class="value lime" id="live-backing">–</div><div class="label">Backing: reserve ÷ (circulating × floor)</div></div>
+        </div>
+        <p class="small muted" id="live-era"></p>
+      </div>
+    </section>
+
+    <section aria-labelledby="identity">
+      <div class="wrap">
+        <h2 id="identity">Identity</h2>
+        <div class="grid two">
+          <div class="card">
+            <dl class="kv">
+              <dt>Name</dt><dd>SolWin</dd>
+              <dt>Ticker</dt><dd><b>$SLW</b></dd>
+              <dt>Tagline</dt><dd>Lose a spin. Mine a coin.</dd>
+              <dt>Chain</dt><dd>Solana (SPL token, 6 decimals)</dd>
+              <dt>Mint (devnet)</dt><dd><a class="mono" href="https://explorer.solana.com/address/6bFqxm4DhCweQsRRYokk9Hpmwtkmk7rdWdSikphg5fXt?cluster=devnet" rel="noopener noreferrer">6bFqxm4DhCweQsRRYokk9Hpmwtkmk7rdWdSikphg5fXt</a></dd>
+              <dt>Metadata</dt><dd><a href="slw-metadata.json">slw-metadata.json</a></dd>
+            </dl>
+          </div>
+          <div class="card">
+            <h3>The mark</h3>
+            <p>A lime coin with a rising step: the floor, which only ever moves up. Lime is $SLW, violet is SolWin, ink is the background they share.</p>
+            <h3 class="spaced">The voice</h3>
+            <p>Numbers first, odds stated plainly, no "to the moon". A loss is called a loss. Every claim on this page can be checked on-chain.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="economics" id="economics">
+      <div class="wrap">
+        <h2>Token economics</h2>
+        <p class="section-lede">Fair launch in the literal sense: no premine, no team or investor tokens, no airdrop. The team is paid from the house edge, never from $SLW.</p>
+        <div class="grid four">
+          <div class="stat"><div class="value lime">100%</div><div class="label">mined by play. 0 premine, 0 team, 0 investors, 0 airdrop.</div></div>
+          <div class="stat"><div class="value">1B</div><div class="label">hard cap. Burns don't free room under it.</div></div>
+          <div class="stat"><div class="value violet">≈296</div><div class="label">$SLW mined per SOL wagered in era 0</div></div>
+          <div class="stat"><div class="value">1.69M</div><div class="label">SOL of bets per era: every halving takes the same volume</div></div>
+        </div>
+
+        <div class="grid two spaced-grid">
+          <div class="card chart-card">
+            <h3>Minted per era</h3>
+            <p class="muted small">Millions of $SLW. Era <i>n</i> covers the <i>n</i>-th half of what's left, and the mint per spin halves with it.</p>
+            <svg class="chart" viewBox="0 0 480 260" role="img" aria-label="Minted per era: era 0 500 million, era 1 250 million, era 2 125 million, era 3 62.5 million, era 4 31.3 million, era 5 15.6 million">
+              <line class="axis" x1="20" y1="220" x2="470" y2="220"/>
+              <rect class="bar-lime" x="30" y="40" width="56" height="180" rx="4"/>
+              <rect class="bar-lime" x="106" y="130" width="56" height="90" rx="4"/>
+              <rect class="bar-lime" x="182" y="175" width="56" height="45" rx="4"/>
+              <rect class="bar-lime" x="258" y="197.5" width="56" height="22.5" rx="3"/>
+              <rect class="bar-lime" x="334" y="208.75" width="56" height="11.25" rx="2"/>
+              <rect class="bar-lime" x="410" y="214.4" width="56" height="5.6" rx="1"/>
+              <text class="val" x="58" y="32" text-anchor="middle">500</text>
+              <text class="val" x="134" y="122" text-anchor="middle">250</text>
+              <text class="val" x="210" y="167" text-anchor="middle">125</text>
+              <text class="val" x="286" y="189" text-anchor="middle">62.5</text>
+              <text class="val" x="362" y="200" text-anchor="middle">31.3</text>
+              <text class="val" x="438" y="206" text-anchor="middle">15.6</text>
+              <text class="lbl" x="58" y="242" text-anchor="middle">Era 0</text>
+              <text class="lbl" x="134" y="242" text-anchor="middle">1</text>
+              <text class="lbl" x="210" y="242" text-anchor="middle">2</text>
+              <text class="lbl" x="286" y="242" text-anchor="middle">3</text>
+              <text class="lbl" x="362" y="242" text-anchor="middle">4</text>
+              <text class="lbl" x="438" y="242" text-anchor="middle">5</text>
+            </svg>
+          </div>
+          <div class="card chart-card">
+            <h3>Floor ceiling per era <span class="badge proposed">Proposed</span></h3>
+            <p class="muted small">SOL per $SLW. With the floor ratchet, the floor may double each halving, so what a losing spin mines keeps the same value.</p>
+            <svg class="chart" viewBox="0 0 480 260" role="img" aria-label="Floor ceiling per era: era 0 0.0002 SOL, era 1 0.0004, era 2 0.0008, era 3 0.0016, era 4 0.0032, era 5 0.0064">
+              <line class="axis" x1="20" y1="220" x2="470" y2="220"/>
+              <rect class="bar-violet" x="30" y="214.4" width="56" height="5.6" rx="1"/>
+              <rect class="bar-violet" x="106" y="208.75" width="56" height="11.25" rx="2"/>
+              <rect class="bar-violet" x="182" y="197.5" width="56" height="22.5" rx="3"/>
+              <rect class="bar-violet" x="258" y="175" width="56" height="45" rx="4"/>
+              <rect class="bar-violet" x="334" y="130" width="56" height="90" rx="4"/>
+              <rect class="bar-violet" x="410" y="40" width="56" height="180" rx="4"/>
+              <text class="val" x="58" y="206" text-anchor="middle">.0002</text>
+              <text class="val" x="134" y="200" text-anchor="middle">.0004</text>
+              <text class="val" x="210" y="189" text-anchor="middle">.0008</text>
+              <text class="val" x="286" y="167" text-anchor="middle">.0016</text>
+              <text class="val" x="362" y="122" text-anchor="middle">.0032</text>
+              <text class="val" x="438" y="32" text-anchor="middle">.0064</text>
+              <text class="lbl" x="58" y="242" text-anchor="middle">Era 0</text>
+              <text class="lbl" x="134" y="242" text-anchor="middle">1</text>
+              <text class="lbl" x="210" y="242" text-anchor="middle">2</text>
+              <text class="lbl" x="286" y="242" text-anchor="middle">3</text>
+              <text class="lbl" x="362" y="242" text-anchor="middle">4</text>
+              <text class="lbl" x="438" y="242" text-anchor="middle">5</text>
+            </svg>
+          </div>
+        </div>
+
+        <div class="table-wrap spaced-grid">
+          <table>
+            <thead><tr><th>Era</th><th class="num">Minted in era</th><th class="num">Cumulative</th><th class="num">$SLW per SOL wagered</th><th class="num">SOL wagered to finish (total)</th></tr></thead>
+            <tbody>
+              <tr><td>0</td><td class="num">500M</td><td class="num">500M</td><td class="num">296.5</td><td class="num">1.69M</td></tr>
+              <tr><td>1</td><td class="num">250M</td><td class="num">750M</td><td class="num">148.2</td><td class="num">3.37M</td></tr>
+              <tr><td>2</td><td class="num">125M</td><td class="num">875M</td><td class="num">74.1</td><td class="num">5.06M</td></tr>
+              <tr><td>3</td><td class="num">62.5M</td><td class="num">937.5M</td><td class="num">37.1</td><td class="num">6.75M</td></tr>
+              <tr><td>4</td><td class="num">31.3M</td><td class="num">968.8M</td><td class="num">18.5</td><td class="num">8.43M</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid three spaced-grid">
+          <div class="card"><h3>Who can mint</h3><p>Only the program, only in <code>settle_spin</code>, only for a losing spin. The mint authority is a program address; there's no freeze authority.</p></div>
+          <div class="card"><h3>How much</h3><p>100–1,000 $SLW per 1 SOL bet, skewed small: 45% of mints are 100–300, only 5% reach 800–1,000. Average 397.5 per losing SOL.</p></div>
+          <div class="card"><h3>The honest caveat</h3><p>The program is upgradeable, so "no admin mint" is as strong as its upgrade key. Before mainnet that key moves to a multisig, and after an audit the program should be made immutable.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="backing">
+      <div class="wrap">
+        <h2 id="backing">Fully backed before it exists</h2>
+        <p class="section-lede">6% of every bet goes to the buyback reserve. On average a SOL of bets mints $SLW worth 0.0593 SOL at the floor, and the reserve receives 0.06 SOL for it. The token is paid for in SOL at the moment it's mined.</p>
+        <div class="grid three">
+          <div class="stat"><div class="value lime">0.0002</div><div class="label">SOL per $SLW: the floor. Fixed at launch; no admin setting can change it.</div></div>
+          <div class="stat"><div class="value">101%</div><div class="label">backing in era 0 (0.06 in ÷ 0.0593 minted, per SOL wagered)</div></div>
+          <div class="stat"><div class="value violet">10%</div><div class="label">of the reserve can be paid out per rolling day, so no one empties it in a block</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="burn" id="burn">
+      <div class="wrap">
+        <h2>Buyback &amp; burn</h2>
+        <p class="section-lede">Three ways $SLW leaves circulation. The first works today; the others are designed and need a program upgrade, an audit and, for the last one, legal advice.</p>
+        <div class="grid three">
+          <div class="card job">
+            <h3>Floor redemption <span class="badge live">Live</span></h3>
+            <p>Sell any amount to the reserve at the floor with <code>buyback</code>. The tokens burn in the same instruction. Works while the game is paused and while you're self-excluded.</p>
+            <p>When the market dips below the floor, anyone can buy and redeem. That arbitrage pulls the price back up, and it's the first job we offer <a href="agents.html">agents</a>.</p>
+          </div>
+          <div class="card job">
+            <h3>Floor ratchet <span class="badge proposed">Proposed</span></h3>
+            <p>From era 1 the reserve grows faster than the tokens it backs. A permissionless <code>ratchet_floor</code> raises the floor by up to 5% a week while backing stays ≥ 125%, never above 0.0002 × 2<sup>era</sup>, and never down.</p>
+            <p>Result: the floor can double every halving while RTP stays 95.88%.</p>
+          </div>
+          <div class="card job">
+            <h3>Revenue buyback <span class="badge proposed">Phase 2</span></h3>
+            <p>When the market is above the floor nobody redeems. Then 20% of the vault's monthly profit above its solvency target buys $SLW on the market and burns it: by the multisig first, with every transaction published, and on-chain only after an audited DEX integration.</p>
+          </div>
+        </div>
+
+        <h3 class="spaced">The ratchet rule</h3>
+<pre><code>circulating  = total_minted − total_burned          // both already on-chain
+backing      = reserve ÷ (circulating × floor)
+ceiling(era) = 0.0002 SOL × 2^era
+
+ratchet_floor()   // anyone can call it
+  require now − last_ratchet ≥ 7 days
+  require backing ≥ 125%
+  new = min(floor × 1.05, ceiling(era), reserve ÷ (circulating × 1.25))
+  require new &gt; floor                               // the floor never goes down
+  floor = new</code></pre>
+
+        <div class="grid two spaced-grid">
+          <div class="card"><h3>Sinks on the roadmap <span class="badge proposed">Proposed</span></h3><p><b>Spin credits:</b> burn $SLW for a bet worth its floor value. <b>Jackpot tickets:</b> burn a fixed amount for one extra jackpot draw, a pure burn that raises backing for every other holder.</p></div>
+          <div class="callout warn"><p><strong>What's promised, and what isn't.</strong> The code promises the cap, mining only on losses, redemption at the floor, the daily cap and burning on redemption. It promises no market price above the floor and no return. The game has a 4.12% house edge.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
+      <p>SolWin runs on Solana devnet with play money. Gambling can be addictive; the program's limits and self-exclusion exist for that reason. Real-money play needs a licence we don't have yet.</p>
+    </div>
+  </footer>
+</body>
+</html>

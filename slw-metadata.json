@@ -1,0 +1,17 @@
+{
+  "name": "SolWin",
+  "symbol": "SLW",
+  "description": "The loss-mined token. $SLW is minted only by losing SolWin spins: 1B hard cap, no premine, backed by a SOL reserve and burned when sold back at the floor. Devnet, play money.",
+  "image": "https://0byteblitz.github.io/solwin-site/assets/slw-logo.svg",
+  "external_url": "https://0byteblitz.github.io/solwin-site/slw.html",
+  "attributes": [
+    { "trait_type": "Supply cap", "value": "1,000,000,000" },
+    { "trait_type": "Premine", "value": "0" },
+    { "trait_type": "Floor (SOL)", "value": "0.0002" },
+    { "trait_type": "Network", "value": "devnet" }
+  ],
+  "properties": {
+    "category": "image",
+    "files": [{ "uri": "https://0byteblitz.github.io/solwin-site/assets/slw-logo.svg", "type": "image/svg+xml" }]
+  }
+}

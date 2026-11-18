@@ -1,0 +1,2217 @@
+{
+  "address": "DWxpojSqhShEiLhCqKWmjvAkQYdpBjwpxtVCbeSa2Kso",
+  "metadata": {
+    "name": "solwin",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "SolWin: an on-chain slot that pays SOL or mints $SLW on every spin"
+  },
+  "instructions": [
+    {
+      "name": "accept_admin",
+      "docs": [
+        "Step 2: the proposed key signs to take over."
+      ],
+      "discriminator": [
+        112,
+        42,
+        45,
+        90,
+        116,
+        181,
+        13,
+        170
+      ],
+      "accounts": [
+        {
+          "name": "new_admin",
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "buyback",
+      "docs": [
+        "Sell $SLW back to the treasury at the floor price. Burns the tokens.",
+        "Stays open during self-exclusion so players can always cash out."
+      ],
+      "discriminator": [
+        106,
+        117,
+        64,
+        30,
+        56,
+        69,
+        7,
+        45
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "reserve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  115,
+                  101,
+                  114,
+                  118,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "slw_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  108,
+                  119,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_slw",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "player"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "slw_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "cancel_spin",
+      "docs": [
+        "Unsticks a spin that was never settled (the VRF callback never came).",
+        "Only the player can call it, and only `CANCEL_AFTER_SLOTS` after the",
+        "bet. The bet is forfeited: it stays in the treasuries, counts as a loss",
+        "for the player's limits, and mints nothing. A late callback for the",
+        "cancelled spin finds no spin account (or a newer spin with a different",
+        "seed) and fails."
+      ],
+      "discriminator": [
+        12,
+        123,
+        214,
+        19,
+        23,
+        69,
+        77,
+        88
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "docs": [
+            "Only the player can forfeit their own spin; the rent goes back to them."
+          ],
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "spin"
+          ]
+        },
+        {
+          "name": "spin",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  105,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "fund",
+      "docs": [
+        "Anyone can add SOL to the vault, the buyback reserve or the jackpot pool."
+      ],
+      "discriminator": [
+        218,
+        188,
+        111,
+        221,
+        152,
+        113,
+        174,
+        7
+      ],
+      "accounts": [
+        {
+          "name": "funder",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "treasury",
+          "docs": [
+            "Any of the three treasuries (the type check proves it is one of ours)."
+          ],
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "init_player",
+      "discriminator": [
+        114,
+        27,
+        219,
+        144,
+        50,
+        15,
+        228,
+        66
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "initialize",
+      "docs": [
+        "One-time setup. Only the program's upgrade authority can call it, so",
+        "nobody can front-run the deploy and take the admin role."
+      ],
+      "discriminator": [
+        175,
+        175,
+        109,
+        31,
+        13,
+        152,
+        155,
+        237
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "reserve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  115,
+                  101,
+                  114,
+                  118,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "jackpot",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  106,
+                  97,
+                  99,
+                  107,
+                  112,
+                  111,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "slw_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  108,
+                  119,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "program",
+          "address": "DWxpojSqhShEiLhCqKWmjvAkQYdpBjwpxtVCbeSa2Kso"
+        },
+        {
+          "name": "program_data"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "InitParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "migrate_randomness",
+      "docs": [
+        "Admin only, one time: moves a config that still names a retired",
+        "Switchboard program to the MagicBlock VRF program. The target is fixed",
+        "in the code and MagicBlock isn't retired, so this can't be used again",
+        "or to point the game at any other randomness source."
+      ],
+      "discriminator": [
+        47,
+        145,
+        156,
+        115,
+        60,
+        208,
+        72,
+        136
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "pause",
+      "docs": [
+        "Emergency stop for new bets. The pauser key (a hot key for fast",
+        "response) or the admin can pause; only the admin can unpause.",
+        "Settlement and buyback keep working so players are never locked out."
+      ],
+      "discriminator": [
+        211,
+        22,
+        221,
+        251,
+        74,
+        121,
+        193,
+        47
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The pauser or the admin; checked in the handler."
+          ],
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "place_bet",
+      "docs": [
+        "Takes the bet and requests randomness from the VRF program, which calls",
+        "`settle_spin` back with it."
+      ],
+      "discriminator": [
+        222,
+        62,
+        67,
+        220,
+        63,
+        166,
+        126,
+        33
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "config",
+          "docs": [
+            "Checked first, so a retired provider gives its own error before any",
+            "other account check (or the token account creation) runs."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "reserve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  115,
+                  101,
+                  114,
+                  118,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "jackpot",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  106,
+                  97,
+                  99,
+                  107,
+                  112,
+                  111,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "spin",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  105,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "slw_mint",
+          "docs": [
+            "Created here because the callback has no payer: a loss mints into it."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  108,
+                  119,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_slw",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "player"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "slw_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "program_identity",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  105,
+                  100,
+                  101,
+                  110,
+                  116,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "oracle_queue",
+          "docs": [
+            "program, which validates it."
+          ],
+          "writable": true
+        },
+        {
+          "name": "vrf_program"
+        },
+        {
+          "name": "slot_hashes",
+          "address": "SysvarS1otHashes111111111111111111111111111"
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "associated_token_program",
+          "address": "ATokenGPvbdGVxr1b2hvZbsiqW5xWH25efTNsLJA8knL"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "bet",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "propose_admin",
+      "docs": [
+        "Step 1 of an admin handover. Nothing changes until the new key accepts,",
+        "so a typo can't hand the program to a key nobody controls."
+      ],
+      "discriminator": [
+        121,
+        214,
+        199,
+        212,
+        87,
+        39,
+        117,
+        234
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "new_admin",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "self_exclude",
+      "docs": [
+        "Cool-off or self-exclusion. Can be extended but never shortened.",
+        "Pass `i64::MAX` for permanent."
+      ],
+      "discriminator": [
+        18,
+        245,
+        91,
+        0,
+        7,
+        239,
+        172,
+        213
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "signer": true
+        },
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "duration_secs",
+          "type": "i64"
+        }
+      ]
+    },
+    {
+      "name": "set_limits",
+      "docs": [
+        "Lowering a limit applies now. Raising or removing one is queued for 24 hours."
+      ],
+      "discriminator": [
+        207,
+        50,
+        250,
+        67,
+        211,
+        33,
+        70,
+        91
+      ],
+      "accounts": [
+        {
+          "name": "player",
+          "signer": true
+        },
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "new_limits",
+          "type": {
+            "defined": {
+              "name": "Limits"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "settle_spin",
+      "docs": [
+        "VRF callback: only the VRF program can call it (it alone can sign as",
+        "the identity PDA it keeps for this program), and only with the",
+        "randomness requested for this spin (`request_seed` is echoed back)."
+      ],
+      "discriminator": [
+        213,
+        20,
+        12,
+        140,
+        189,
+        105,
+        211,
+        121
+      ],
+      "accounts": [
+        {
+          "name": "vrf_program_identity",
+          "docs": [
+            "The VRF program's identity PDA for this program; checked against",
+            "`vrf_callback_identity(config.randomness_program)` in the handler."
+          ],
+          "signer": true
+        },
+        {
+          "name": "player",
+          "docs": [
+            "tie every other account to it); receives winnings and the spin's rent."
+          ],
+          "writable": true,
+          "relations": [
+            "spin"
+          ]
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "jackpot",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  106,
+                  97,
+                  99,
+                  107,
+                  112,
+                  111,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  108,
+                  97,
+                  121,
+                  101,
+                  114
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "spin",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  112,
+                  105,
+                  110
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "player"
+              }
+            ]
+          }
+        },
+        {
+          "name": "slw_mint",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  115,
+                  108,
+                  119,
+                  95,
+                  109,
+                  105,
+                  110,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "player_slw",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "player"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  6,
+                  221,
+                  246,
+                  225,
+                  215,
+                  101,
+                  161,
+                  147,
+                  217,
+                  203,
+                  225,
+                  70,
+                  206,
+                  235,
+                  121,
+                  172,
+                  28,
+                  180,
+                  133,
+                  237,
+                  95,
+                  91,
+                  55,
+                  145,
+                  58,
+                  140,
+                  245,
+                  133,
+                  126,
+                  255,
+                  0,
+                  169
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "slw_mint"
+              }
+            ],
+            "program": {
+              "kind": "const",
+              "value": [
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
+              ]
+            }
+          }
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        }
+      ],
+      "args": [
+        {
+          "name": "randomness",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        },
+        {
+          "name": "request_seed",
+          "type": {
+            "array": [
+              "u8",
+              32
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "update_config",
+      "docs": [
+        "Admin only. The randomness program, floor price, bet split and paytable",
+        "can never be changed after initialize; only these bounded settings can."
+      ],
+      "discriminator": [
+        29,
+        158,
+        252,
+        191,
+        10,
+        83,
+        219,
+        99
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "min_bet",
+          "type": {
+            "option": "u64"
+          }
+        },
+        {
+          "name": "pauser",
+          "type": {
+            "option": "pubkey"
+          }
+        },
+        {
+          "name": "unpause",
+          "type": "bool"
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Config",
+      "discriminator": [
+        155,
+        12,
+        170,
+        224,
+        30,
+        250,
+        204,
+        130
+      ]
+    },
+    {
+      "name": "PlayerProfile",
+      "discriminator": [
+        82,
+        226,
+        99,
+        87,
+        164,
+        130,
+        181,
+        80
+      ]
+    },
+    {
+      "name": "SpinRequest",
+      "discriminator": [
+        191,
+        150,
+        237,
+        107,
+        219,
+        220,
+        67,
+        236
+      ]
+    },
+    {
+      "name": "Treasury",
+      "discriminator": [
+        238,
+        239,
+        123,
+        238,
+        89,
+        1,
+        168,
+        253
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "AdminChanged",
+      "discriminator": [
+        232,
+        34,
+        31,
+        226,
+        62,
+        18,
+        19,
+        114
+      ]
+    },
+    {
+      "name": "AdminProposed",
+      "discriminator": [
+        129,
+        249,
+        226,
+        227,
+        199,
+        82,
+        110,
+        243
+      ]
+    },
+    {
+      "name": "BoughtBack",
+      "discriminator": [
+        188,
+        156,
+        61,
+        154,
+        116,
+        184,
+        186,
+        21
+      ]
+    },
+    {
+      "name": "ConfigChanged",
+      "discriminator": [
+        147,
+        25,
+        86,
+        98,
+        98,
+        77,
+        78,
+        192
+      ]
+    },
+    {
+      "name": "LimitsChanged",
+      "discriminator": [
+        124,
+        11,
+        98,
+        161,
+        150,
+        103,
+        33,
+        110
+      ]
+    },
+    {
+      "name": "RandomnessProviderChanged",
+      "discriminator": [
+        144,
+        224,
+        244,
+        39,
+        65,
+        235,
+        72,
+        69
+      ]
+    },
+    {
+      "name": "SelfExcluded",
+      "discriminator": [
+        234,
+        247,
+        55,
+        66,
+        132,
+        250,
+        160,
+        150
+      ]
+    },
+    {
+      "name": "SpinCancelled",
+      "discriminator": [
+        93,
+        7,
+        29,
+        186,
+        128,
+        93,
+        29,
+        166
+      ]
+    },
+    {
+      "name": "SpinSettled",
+      "discriminator": [
+        31,
+        68,
+        15,
+        166,
+        151,
+        136,
+        158,
+        67
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidParams",
+      "msg": "Invalid parameters"
+    },
+    {
+      "code": 6001,
+      "name": "Unauthorized",
+      "msg": "Not authorized"
+    },
+    {
+      "code": 6002,
+      "name": "Paused",
+      "msg": "The game is paused"
+    },
+    {
+      "code": 6003,
+      "name": "SelfExcluded",
+      "msg": "You are in a cool-off or self-exclusion period"
+    },
+    {
+      "code": 6004,
+      "name": "TooFast",
+      "msg": "Spins must be at least 2.5 seconds apart"
+    },
+    {
+      "code": 6005,
+      "name": "BetTooSmall",
+      "msg": "Bet is below the minimum"
+    },
+    {
+      "code": 6006,
+      "name": "BetTooLarge",
+      "msg": "Bet is above the maximum the vault allows"
+    },
+    {
+      "code": 6007,
+      "name": "BetOverPlayerLimit",
+      "msg": "Bet is above your own max-bet limit"
+    },
+    {
+      "code": 6008,
+      "name": "LossLimitReached",
+      "msg": "This bet could take you past your loss limit"
+    },
+    {
+      "code": 6009,
+      "name": "WagerLimitReached",
+      "msg": "This bet would take you past your daily wager limit"
+    },
+    {
+      "code": 6010,
+      "name": "BadRandomnessAccount",
+      "msg": "The randomness program, queue or callback accounts are not the configured ones"
+    },
+    {
+      "code": 6011,
+      "name": "RandomnessNotFresh",
+      "msg": "Randomness must be committed in the previous slot"
+    },
+    {
+      "code": 6012,
+      "name": "RandomnessAlreadyRevealed",
+      "msg": "Randomness was already revealed"
+    },
+    {
+      "code": 6013,
+      "name": "RandomnessMismatch",
+      "msg": "Randomness account does not match the committed one"
+    },
+    {
+      "code": 6014,
+      "name": "RandomnessNotRevealed",
+      "msg": "Randomness has not been revealed yet"
+    },
+    {
+      "code": 6015,
+      "name": "ReserveTooLow",
+      "msg": "The buyback reserve cannot cover this amount"
+    },
+    {
+      "code": 6016,
+      "name": "BuybackDailyCapReached",
+      "msg": "Today's buyback limit is reached; try again later"
+    },
+    {
+      "code": 6017,
+      "name": "SpinNotExpired",
+      "msg": "The spin can only be cancelled after the settlement timeout"
+    },
+    {
+      "code": 6018,
+      "name": "RandomnessProviderRetired",
+      "msg": "The configured randomness provider has shut down; bets are disabled"
+    },
+    {
+      "code": 6019,
+      "name": "RandomnessProviderNotRetired",
+      "msg": "The randomness provider is not a retired one, so it can't be migrated"
+    }
+  ],
+  "types": [
+    {
+      "name": "AdminChanged",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "previous",
+            "type": "pubkey"
+          },
+          {
+            "name": "current",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AdminProposed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "current",
+            "type": "pubkey"
+          },
+          {
+            "name": "proposed",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BoughtBack",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "payout",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Config",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "docs": [
+              "Changes bounded settings and roles. Should be a multisig (e.g. Squads)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_admin",
+            "docs": [
+              "Set by propose_admin; becomes admin when it signs accept_admin."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "pauser",
+            "docs": [
+              "Can only pause new bets (a hot key for incident response)."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "buyback_window_start",
+            "type": "i64"
+          },
+          {
+            "name": "buyback_window_budget",
+            "type": "u64"
+          },
+          {
+            "name": "buyback_window_paid",
+            "type": "u64"
+          },
+          {
+            "name": "slw_mint",
+            "type": "pubkey"
+          },
+          {
+            "name": "randomness_program",
+            "docs": [
+              "VRF program that serves randomness (MagicBlock). Set at initialize;",
+              "`migrate_randomness` can change it once, away from retired Switchboard."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "min_bet",
+            "type": "u64"
+          },
+          {
+            "name": "floor_lamports_per_slw",
+            "docs": [
+              "Buyback price in lamports per whole $SLW (200,000 = 0.0002 SOL)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "buyback_bps",
+            "type": "u64"
+          },
+          {
+            "name": "jackpot_bps",
+            "type": "u64"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          },
+          {
+            "name": "total_minted",
+            "docs": [
+              "$SLW ever minted, in base units (burns don't free room under the cap)."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "total_burned",
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "mint_bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ConfigChanged",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "admin",
+            "type": "pubkey"
+          },
+          {
+            "name": "pauser",
+            "type": "pubkey"
+          },
+          {
+            "name": "min_bet",
+            "type": "u64"
+          },
+          {
+            "name": "paused",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "InitParams",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pauser",
+            "type": "pubkey"
+          },
+          {
+            "name": "randomness_program",
+            "type": "pubkey"
+          },
+          {
+            "name": "min_bet",
+            "type": "u64"
+          },
+          {
+            "name": "floor_lamports_per_slw",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Limits",
+      "docs": [
+        "Player-set limits. 0 means no limit."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "daily_loss",
+            "type": "u64"
+          },
+          {
+            "name": "weekly_loss",
+            "type": "u64"
+          },
+          {
+            "name": "monthly_loss",
+            "type": "u64"
+          },
+          {
+            "name": "max_bet",
+            "type": "u64"
+          },
+          {
+            "name": "daily_wager",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "LimitsChanged",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "limits",
+            "type": {
+              "defined": {
+                "name": "Limits"
+              }
+            }
+          },
+          {
+            "name": "pending_effective_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PlayerProfile",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "owner",
+            "type": "pubkey"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "created_at",
+            "type": "i64"
+          },
+          {
+            "name": "limits",
+            "type": {
+              "defined": {
+                "name": "Limits"
+              }
+            }
+          },
+          {
+            "name": "pending",
+            "type": {
+              "defined": {
+                "name": "Limits"
+              }
+            }
+          },
+          {
+            "name": "pending_effective_at",
+            "docs": [
+              "0 = nothing pending."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "excluded_until",
+            "type": "i64"
+          },
+          {
+            "name": "last_spin_slot",
+            "type": "u64"
+          },
+          {
+            "name": "day_start",
+            "type": "i64"
+          },
+          {
+            "name": "day_bet",
+            "type": "u64"
+          },
+          {
+            "name": "day_won",
+            "type": "u64"
+          },
+          {
+            "name": "week_start",
+            "type": "i64"
+          },
+          {
+            "name": "week_bet",
+            "type": "u64"
+          },
+          {
+            "name": "week_won",
+            "type": "u64"
+          },
+          {
+            "name": "month_start",
+            "type": "i64"
+          },
+          {
+            "name": "month_bet",
+            "type": "u64"
+          },
+          {
+            "name": "month_won",
+            "type": "u64"
+          },
+          {
+            "name": "total_bet",
+            "type": "u64"
+          },
+          {
+            "name": "total_won",
+            "type": "u64"
+          },
+          {
+            "name": "total_minted",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RandomnessProviderChanged",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "previous",
+            "type": "pubkey"
+          },
+          {
+            "name": "current",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SelfExcluded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "until",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SpinCancelled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "bet",
+            "type": "u64"
+          },
+          {
+            "name": "commit_slot",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SpinRequest",
+      "docs": [
+        "One pending spin per player, created by place_bet and closed by settlement."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "bet",
+            "type": "u64"
+          },
+          {
+            "name": "request_seed",
+            "docs": [
+              "Seed of this spin's VRF request; the callback must echo it back.",
+              "(Same 32 bytes as the old `randomness_account` field: layout unchanged.)"
+            ],
+            "type": {
+              "array": [
+                "u8",
+                32
+              ]
+            }
+          },
+          {
+            "name": "commit_slot",
+            "docs": [
+              "Slot the bet was placed in."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SpinSettled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "player",
+            "type": "pubkey"
+          },
+          {
+            "name": "bet",
+            "type": "u64"
+          },
+          {
+            "name": "grid",
+            "type": {
+              "array": [
+                {
+                  "array": [
+                    "u8",
+                    3
+                  ]
+                },
+                5
+              ]
+            }
+          },
+          {
+            "name": "bonus",
+            "type": "bool"
+          },
+          {
+            "name": "payout",
+            "type": "u64"
+          },
+          {
+            "name": "jackpot",
+            "type": "u64"
+          },
+          {
+            "name": "minted",
+            "type": "u64"
+          },
+          {
+            "name": "era",
+            "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Treasury",
+      "docs": [
+        "Program-owned SOL holder: the vault, the buyback reserve or the jackpot pool."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}
