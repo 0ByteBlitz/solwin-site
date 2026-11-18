@@ -8,15 +8,15 @@
   <title>SolWin: every spin mines</title>
   <meta name="description" content="SolWin is an on-chain Solana slot where no spin is wasted: every spin pays SOL or mines the $SLW token. Provably random with MagicBlock VRF. Devnet, play money.">
   <meta name="theme-color" content="#07070d">
-  <link rel="icon" type="image/svg+xml" href="assets/solwin-mark.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <div class="banner"><div class="wrap"><strong>Devnet only, play money.</strong> Nothing here is real-money gambling or an offer to buy anything. 18+ only; not available in <a href="legal.html#restricted">restricted countries</a>.</div></div>
+  <div class="banner"><div class="wrap"><strong>Devnet · play money</strong> Not real-money gambling or an offer to buy anything. 18+ only; not available in <a href="legal.html#restricted">restricted countries</a>.</div></div>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="30" height="30">SolWin</a>
+      <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="36" height="36"><span>Sol<b>Win</b></span></a>
       <nav class="nav" aria-label="Main">
         <a href="./" aria-current="page">Home</a>
         <a href="slw.html">$SLW</a>
@@ -25,17 +25,49 @@
       </nav>
     </div>
   </header>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track">
+    <span>RTP <b>95.88%</b></span><span>House edge <b>4.12%</b></span><span>Losses mine <b>$SLW</b></span><span>Floor <b>0.0002 SOL</b></span><span>Cap <b>1,000,000,000 SLW</b></span><span>Premine <b>0</b></span><span>Randomness <b>MagicBlock VRF</b></span><span>Network <b>devnet</b></span>
+    <span>RTP <b>95.88%</b></span><span>House edge <b>4.12%</b></span><span>Losses mine <b>$SLW</b></span><span>Floor <b>0.0002 SOL</b></span><span>Cap <b>1,000,000,000 SLW</b></span><span>Premine <b>0</b></span><span>Randomness <b>MagicBlock VRF</b></span><span>Network <b>devnet</b></span>
+  </div></div>
 
   <main id="main">
     <section class="hero">
-      <div class="wrap">
-        <p class="eyebrow">On-chain slot · Solana</p>
-        <h1>Every spin <span class="hl">mines.</span></h1>
-        <p class="lede">A win pays <strong>SOL</strong>. A loss mints <strong>$SLW</strong>, a capped, fully backed token you can sell back to the reserve at a fixed floor. No spin leaves you with nothing.</p>
-        <div class="cta">
-          <a class="btn primary" href="play/">Play the demo</a>
-          <a class="btn" href="slw.html">Meet $SLW</a>
-          <a class="btn" href="agents.html">For AI agents</a>
+      <div class="wrap hero-split">
+        <div>
+          <p class="eyebrow">On-chain slot on Solana</p>
+          <h1>No blanks.<br>Every spin <span class="hl">mines.</span></h1>
+          <p class="lede">A win pays <strong>SOL</strong>. A loss mints <strong>$SLW</strong>: a capped token, paid for in SOL the moment it's mined, that you can always sell back to the reserve at a fixed floor.</p>
+          <div class="cta">
+            <a class="btn primary" href="play/">Play the demo <span class="arrow">&rarr;</span></a>
+            <a class="btn" href="slw.html">Meet $SLW</a>
+            <a class="btn" href="agents.html">For AI agents</a>
+          </div>
+        </div>
+
+        <div class="machine" aria-hidden="true">
+          <div class="machine-head"><span>Every spin · pay or mine</span><span class="lights"><i></i><i></i><i></i></span></div>
+          <div class="reels">
+            <div class="reel"><div class="strip">
+              <span class="s-lime">7</span><span class="s-violet">&#9670;</span><span class="s-pink">&#9733;</span><span class="s-cyan">$</span><span class="s-yellow">&#9679;</span><span class="s-lime">W</span>
+              <span class="s-lime">7</span><span class="s-violet">&#9670;</span><span class="s-pink">&#9733;</span><span class="s-cyan">$</span><span class="s-yellow">&#9679;</span><span class="s-lime">W</span>
+            </div></div>
+            <div class="reel"><div class="strip">
+              <span class="s-pink">&#9733;</span><span class="s-lime">W</span><span class="s-yellow">&#9679;</span><span class="s-violet">&#9670;</span><span class="s-lime">7</span><span class="s-cyan">$</span>
+              <span class="s-pink">&#9733;</span><span class="s-lime">W</span><span class="s-yellow">&#9679;</span><span class="s-violet">&#9670;</span><span class="s-lime">7</span><span class="s-cyan">$</span>
+            </div></div>
+            <div class="reel"><div class="strip">
+              <span class="s-cyan">$</span><span class="s-lime">7</span><span class="s-violet">&#9670;</span><span class="s-lime">W</span><span class="s-pink">&#9733;</span><span class="s-yellow">&#9679;</span>
+              <span class="s-cyan">$</span><span class="s-lime">7</span><span class="s-violet">&#9670;</span><span class="s-lime">W</span><span class="s-pink">&#9733;</span><span class="s-yellow">&#9679;</span>
+            </div></div>
+          </div>
+          <div class="tape"><div class="tape-track">
+            <p><span class="k">Win</span><span class="win">+2.40 SOL paid</span></p>
+            <p><span class="k">Loss</span><span class="mine">+412 $SLW mined</span></p>
+            <p><span class="k">Win</span><span class="win">+0.80 SOL paid</span></p>
+            <p><span class="k">Loss</span><span class="mine">+157 $SLW mined</span></p>
+            <p><span class="k">Win</span><span class="win">+2.40 SOL paid</span></p>
+          </div></div>
+          <p class="machine-foot">Illustration · per 1 SOL bet</p>
         </div>
       </div>
     </section>
@@ -43,11 +75,11 @@
     <section aria-labelledby="how">
       <div class="wrap">
         <h2 id="how">How a spin works</h2>
-        <p class="section-lede">One transaction from your wallet. The randomness comes from MagicBlock VRF, verified on-chain before the program settles your spin.</p>
+        <p class="section-lede">One transaction from your wallet. The randomness comes from MagicBlock VRF and is verified on-chain before the program settles your spin.</p>
         <div class="grid three">
-          <div class="card"><span class="step">1</span><h3>Bet</h3><p><code>place_bet</code> splits your SOL: 92% to the vault, 6% to the $SLW reserve, 2% to the jackpot. It asks MagicBlock for randomness in the same transaction.</p></div>
-          <div class="card"><span class="step">2</span><h3>Prove</h3><p>MagicBlock's oracle answers with a VRF proof. The VRF program checks the proof and calls <code>settle_spin</code>. Nobody, us included, can pick the result.</p></div>
-          <div class="card"><span class="step">3</span><h3>Pay or mine</h3><p>A win pays SOL straight to your wallet. A loss mints 100–1,000 $SLW per SOL bet. Either way the reels and amounts are on-chain in the <code>SpinSettled</code> event.</p></div>
+          <div class="card"><span class="step">BET</span><h3>Your SOL splits three ways</h3><p><code>place_bet</code> sends 92% to the vault, 6% to the $SLW reserve and 2% to the jackpot, and asks MagicBlock for randomness in the same transaction.</p></div>
+          <div class="card"><span class="step">PROVE</span><h3>Randomness nobody picks</h3><p>MagicBlock's oracle answers with a VRF proof. The VRF program checks it and calls <code>settle_spin</code>. Nobody, us included, can choose the result.</p></div>
+          <div class="card"><span class="step">PAY / MINE</span><h3>No spin comes back empty</h3><p>A win pays SOL straight to your wallet. A loss mints 100–1,000 $SLW per SOL bet. Either way, the reels and amounts are on-chain in <code>SpinSettled</code>.</p></div>
         </div>
       </div>
     </section>
@@ -55,22 +87,22 @@
     <section aria-labelledby="numbers">
       <div class="wrap">
         <h2 id="numbers">The numbers, stated plainly</h2>
-        <p class="section-lede">From the exact paytable calculation, checked by a 10M-spin simulation in CI. The house has an edge; we tell you how big.</p>
+        <p class="section-lede">From the exact paytable calculation, checked by a 10M-spin simulation in CI. The house has an edge, and we tell you how big it is.</p>
         <div class="grid four">
-          <div class="stat"><div class="value lime">95.88%</div><div class="label">Return to player: SOL wins 87.95%, $SLW at floor 5.93%, jackpot 2%</div></div>
-          <div class="stat"><div class="value">4.12%</div><div class="label">House edge. That's the cost of a spin, on average.</div></div>
-          <div class="stat"><div class="value violet">74.6%</div><div class="label">of spins lose, and every one of those mines $SLW</div></div>
+          <div class="stat"><div class="value lime">95.88%</div><div class="label">Return to player: SOL wins 87.95%, $SLW at the floor 5.93%, jackpot 2%</div></div>
+          <div class="stat"><div class="value">4.12%</div><div class="label">House edge: the average cost of a spin</div></div>
+          <div class="stat"><div class="value violet">74.6%</div><div class="label">of spins lose, and every one of them mines $SLW</div></div>
           <div class="stat"><div class="value">1B</div><div class="label">$SLW hard cap, halving per era, 100% mined by play</div></div>
         </div>
 
         <h3 class="split-title">Where each bet goes</h3>
         <div class="split" role="img" aria-label="Bet split: 92% vault, 6% buyback reserve, 2% jackpot">
-          <span class="vault">92% vault</span><span class="reserve">6%</span><span class="jackpot">2%</span>
+          <span class="vault">92% VAULT</span><span class="reserve">6%</span><span class="jackpot">2%</span>
         </div>
         <ul class="legend-list">
           <li><span class="dot vault"></span><b>Vault 92%</b>: pays SOL wins. The max bet adjusts automatically to what the vault can cover.</li>
           <li><span class="dot reserve"></span><b>Buyback reserve 6%</b>: backs the $SLW floor. Only <code>buyback</code> can take SOL out, and it burns the tokens.</li>
-          <li><span class="dot jackpot"></span><b>Jackpot 2%</b>: 1 in 50,000 per 1 SOL bet wins the whole pool.</li>
+          <li><span class="dot jackpot"></span><b>Jackpot 2%</b>: a 1 in 50,000 chance per 1 SOL bet of winning the whole pool.</li>
         </ul>
       </div>
     </section>
@@ -78,11 +110,11 @@
     <section aria-labelledby="protect">
       <div class="wrap">
         <h2 id="protect">Player protection, enforced by the program</h2>
-        <p class="section-lede">Not settings in a web page: rules in the on-chain program that apply to every wallet, human or agent.</p>
+        <p class="section-lede">These aren't settings on a web page. They're rules in the on-chain program and apply to every wallet, human or agent.</p>
         <div class="grid three">
-          <div class="card"><h3>Limits that stick</h3><p>Daily, weekly and monthly loss limits, a wager limit and a max bet. Lowering is instant; raising waits 24 hours.</p></div>
-          <div class="card"><h3>Cool-off and self-exclusion</h3><p>From one day to permanent. Selling $SLW keeps working while you're excluded, so you can always cash out.</p></div>
-          <div class="card"><h3>New wallets start small</h3><p>0.1 SOL max bet for a wallet's first week, a minimum gap between spins, and a pause switch that can stop new bets but never move funds.</p></div>
+          <div class="card"><span class="step">LIMITS</span><h3>Limits that stick</h3><p>Daily, weekly and monthly loss limits, a wager limit and a max bet. Lowering a limit is instant; raising one waits 24 hours.</p></div>
+          <div class="card"><span class="step">PAUSE</span><h3>Cool-off and self-exclusion</h3><p>From one day to permanent. Selling $SLW keeps working while you're excluded, so you can always cash out.</p></div>
+          <div class="card"><span class="step">NEW</span><h3>New wallets start small</h3><p>A 0.1 SOL max bet in a wallet's first week, a minimum gap between spins, and a pause switch that can stop new bets but never move funds.</p></div>
         </div>
       </div>
     </section>
@@ -101,8 +133,8 @@
             </dl>
           </div>
           <div class="card">
-            <h3>Before mainnet</h3>
-            <p>External audit, multisig for every authority, a gambling licence and legal review. Until then this is a devnet game with play money, and the demo runs off-chain by default.</p>
+            <h3>Before mainnet <span class="badge no">Not yet</span></h3>
+            <p>An external audit, a multisig for every authority, a gambling licence and legal review. Until then this is a devnet game with play money, it isn't regulated by any authority, and the demo runs off-chain by default. <a href="legal.html">Legal and restrictions</a>.</p>
           </div>
         </div>
       </div>
@@ -111,8 +143,9 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="legal.html">Legal</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
-      <p>SolWin runs on Solana devnet with play money. 18+ only, and not available in <a href="legal.html#restricted">restricted jurisdictions</a>. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer. Gambling can be addictive: <a href="legal.html#help">get help</a>.</p>
+      <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="legal.html">Legal</a><a href="cookies.html">Cookies</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
+      <p>SolWin runs on Solana devnet with play money. It is not licensed or regulated by any authority. 18+ only, and not available in <a href="legal.html#restricted">restricted jurisdictions</a>. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer. No cookies, no tracking. Gambling can be addictive: <a href="legal.html#help">get help</a>.</p>
+      <div class="bigmark" aria-hidden="true">SolWin</div>
     </div>
   </footer>
 </body>

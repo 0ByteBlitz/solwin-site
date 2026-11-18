@@ -10,7 +10,8 @@
     "token_page": "https://0byteblitz.github.io/solwin-site/slw.html",
     "idl": "https://0byteblitz.github.io/solwin-site/idl/solwin.json",
     "token_metadata": "https://0byteblitz.github.io/solwin-site/slw-metadata.json",
-    "legal": "https://0byteblitz.github.io/solwin-site/legal.html"
+    "legal": "https://0byteblitz.github.io/solwin-site/legal.html",
+    "cookies": "https://0byteblitz.github.io/solwin-site/cookies.html"
   },
   "policy": {
     "house_edge": 0.0412,
@@ -26,6 +27,10 @@
     "warranty": "none: provided as is",
     "liability": "none, to the fullest extent permitted by law",
     "financial_advice": false,
+    "regulated": false,
+    "regulator": null,
+    "cookies": false,
+    "tracking": false,
     "agent_operator_responsible": true
   },
   "network": {

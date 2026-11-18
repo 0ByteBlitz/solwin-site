@@ -8,15 +8,15 @@
   <title>Legal and restrictions · SolWin</title>
   <meta name="description" content="Who may use SolWin, restricted jurisdictions, no warranty and no liability, not financial advice, risks, and where to get help with gambling.">
   <meta name="theme-color" content="#07070d">
-  <link rel="icon" type="image/svg+xml" href="assets/solwin-mark.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <div class="banner"><div class="wrap"><strong>Devnet only, play money.</strong> 18+ only. Not available in <a href="#restricted">restricted countries</a>.</div></div>
+  <div class="banner"><div class="wrap"><strong>Devnet · play money</strong> 18+ only. Not available in <a href="#restricted">restricted countries</a>.</div></div>
   <header class="site-header">
     <div class="wrap">
-      <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="30" height="30">SolWin</a>
+      <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="36" height="36"><span>Sol<b>Win</b></span></a>
       <nav class="nav" aria-label="Main">
         <a href="./">Home</a>
         <a href="slw.html">$SLW</a>
@@ -25,6 +25,10 @@
       </nav>
     </div>
   </header>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track">
+    <span>RTP <b>95.88%</b></span><span>House edge <b>4.12%</b></span><span>Losses mine <b>$SLW</b></span><span>Floor <b>0.0002 SOL</b></span><span>Cap <b>1,000,000,000 SLW</b></span><span>Premine <b>0</b></span><span>Randomness <b>MagicBlock VRF</b></span><span>Network <b>devnet</b></span>
+    <span>RTP <b>95.88%</b></span><span>House edge <b>4.12%</b></span><span>Losses mine <b>$SLW</b></span><span>Floor <b>0.0002 SOL</b></span><span>Cap <b>1,000,000,000 SLW</b></span><span>Premine <b>0</b></span><span>Randomness <b>MagicBlock VRF</b></span><span>Network <b>devnet</b></span>
+  </div></div>
 
   <main id="main">
     <section class="hero hero-compact">
@@ -40,6 +44,7 @@
       <div class="wrap legal">
         <h2 id="summary">In short</h2>
         <div class="callout warn">
+          <p><strong>Not regulated by any authority.</strong> SolWin is not licensed, registered, authorised or supervised by any gambling, financial or other regulator, anywhere. You get none of the protections regulated services give.</p>
           <p><strong>Experimental software on a test network.</strong> SolWin runs on Solana devnet. Devnet SOL and devnet $SLW have no monetary value, and nothing here can be bought, sold or cashed out for real money.</p>
           <p><strong>18+ and not everywhere.</strong> You must be 18 or the legal gambling age where you are, whichever is higher. You must not use SolWin from a <a href="#restricted">restricted jurisdiction</a>.</p>
           <p><strong>As is, at your own risk.</strong> No warranty of any kind, and no liability for any loss, to the fullest extent the law allows.</p>
@@ -47,6 +52,7 @@
         </div>
 
         <nav class="toc" aria-label="On this page">
+          <a href="#regulation">Not regulated</a>
           <a href="#eligibility">Who can use it</a>
           <a href="#restricted">Restricted jurisdictions</a>
           <a href="#devnet">Test network, no real money</a>
@@ -56,7 +62,20 @@
           <a href="#agents">AI agents</a>
           <a href="#help">Gambling help</a>
           <a href="#changes">Changes and contact</a>
+          <a href="cookies.html">Cookies and privacy</a>
         </nav>
+
+        <h2 id="regulation">Not regulated by any authority</h2>
+        <p><strong>SolWin is not licensed, registered, authorised or regulated by any gambling, financial, securities, consumer-protection or other authority in any jurisdiction.</strong> No regulator has reviewed or approved the game, its odds, the $SLW token, the on-chain program or this site.</p>
+        <p>That means you have <strong>none of the protections</strong> that licensed gambling or regulated financial services offer, including:</p>
+        <ul>
+          <li>no regulator overseeing fairness, solvency or conduct;</li>
+          <li>no complaints body, ombudsman or independent dispute resolution;</li>
+          <li>no compensation or deposit-guarantee scheme;</li>
+          <li>no legally required segregation or protection of player funds;</li>
+          <li>no regulated identity, age or affordability checks.</li>
+        </ul>
+        <p>Published odds, on-chain limits and open code are design choices, not regulatory guarantees. Mentions of a future licence describe a plan, not a status.</p>
 
         <h2 id="eligibility">Who can use it</h2>
         <ul>
@@ -98,7 +117,8 @@
           <li>failures or delays of the randomness provider (MagicBlock VRF), the Solana network, RPC providers or GitHub;</li>
           <li>your wallet, your device, phishing, or a lost or stolen private key or seed phrase;</li>
           <li>transactions you sign: blockchain transactions are final and can't be reversed by anyone;</li>
-          <li>changes in law or regulation, or your use of SolWin where it isn't allowed.</li>
+          <li>changes in law or regulation, or your use of SolWin where it isn't allowed;</li>
+          <li>the absence of any regulatory protection (see <a href="#regulation">not regulated</a>).</li>
         </ul>
         <p>Some places don't allow certain warranties to be excluded or liability to be limited. Where that applies, they are excluded or limited to the smallest extent the law allows, and the rest of this section still applies.</p>
 
@@ -145,8 +165,9 @@
 
   <footer class="site-footer">
     <div class="wrap">
-      <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="legal.html">Legal</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
-      <p>SolWin runs on Solana devnet with play money. 18+ only, and not available in <a href="legal.html#restricted">restricted jurisdictions</a>. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer. Gambling can be addictive: <a href="legal.html#help">get help</a>.</p>
+      <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="legal.html">Legal</a><a href="cookies.html">Cookies</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
+      <p>SolWin runs on Solana devnet with play money. It is not licensed or regulated by any authority. 18+ only, and not available in <a href="legal.html#restricted">restricted jurisdictions</a>. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer. No cookies, no tracking. Gambling can be addictive: <a href="legal.html#help">get help</a>.</p>
+      <div class="bigmark" aria-hidden="true">SolWin</div>
     </div>
   </footer>
 </body>

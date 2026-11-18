@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.devnet.solana.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="no-referrer">
+  <title>Cookies and privacy · SolWin</title>
+  <meta name="description" content="SolWin uses no cookies, analytics or trackers. What the demo keeps in your browser, which third parties your browser talks to, and how to clear it.">
+  <meta name="theme-color" content="#07070d">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="banner"><div class="wrap"><strong>No cookies</strong> No analytics, no ads, no trackers, no third-party scripts.</div></div>
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="36" height="36"><span>Sol<b>Win</b></span></a>
+      <nav class="nav" aria-label="Main">
+        <a href="./">Home</a>
+        <a href="slw.html">$SLW</a>
+        <a href="agents.html">Agents</a>
+        <a href="play/">Play demo</a>
+      </nav>
+    </div>
+  </header>
+  <div class="ticker" aria-hidden="true"><div class="ticker-track">
+    <span>Cookies <b>0</b></span><span>Analytics <b>none</b></span><span>Trackers <b>none</b></span><span>Third-party scripts <b>none</b></span><span>Accounts <b>none</b></span><span>Forms <b>none</b></span><span>Personal data collected <b>none</b></span>
+    <span>Cookies <b>0</b></span><span>Analytics <b>none</b></span><span>Trackers <b>none</b></span><span>Third-party scripts <b>none</b></span><span>Accounts <b>none</b></span><span>Forms <b>none</b></span><span>Personal data collected <b>none</b></span>
+  </div></div>
+
+  <main id="main">
+    <section class="hero hero-compact">
+      <div class="wrap">
+        <p class="eyebrow">Cookie policy</p>
+        <h1>Cookies and <span class="hl">privacy.</span></h1>
+        <p class="lede">Short version: <strong>we don't set cookies, we don't track you, and we don't collect personal data.</strong> Here's exactly what does happen when you visit.</p>
+        <p class="small muted">Last updated 18 November 2026.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="cookies">
+      <div class="wrap legal">
+        <h2 id="cookies">Cookies</h2>
+        <p>This site and the SolWin demo <strong>set no cookies</strong>: no first-party cookies, no third-party cookies, no session cookies. There are no analytics, advertising, social-media or tracking scripts, no pixels, no fingerprinting and no third-party fonts. Every page's Content-Security-Policy only allows scripts and styles from this site, so none can be added by accident.</p>
+        <p>Because nothing optional is stored or tracked, there's no cookie banner to accept. If that ever changes, we'll ask for your consent first.</p>
+
+        <nav class="toc" aria-label="On this page">
+          <a href="#storage">Browser storage</a>
+          <a href="#third-parties">Who your browser talks to</a>
+          <a href="#personal-data">Personal data</a>
+          <a href="#blockchain">The blockchain is public</a>
+          <a href="#clear">How to clear it</a>
+          <a href="#changes">Changes</a>
+        </nav>
+
+        <h2 id="storage">Browser storage (the demo only)</h2>
+        <p>The web app at <a href="play/">/play/</a> keeps a few preferences in your browser's <strong>local storage</strong> so they survive a reload. They never leave your device: nothing reads them except the app in your own browser. The site's other pages store nothing.</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Key</th><th>What it holds</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td><code>solwin.sound</code></td><td><code>1</code> or <code>0</code></td><td>Remembers whether you turned sound effects on or off.</td></tr>
+              <tr><td><code>solwin.calm</code></td><td><code>1</code> or <code>0</code></td><td>Remembers calm mode (no shake, no flashes, fewer particles).</td></tr>
+              <tr><td><code>solwin.wallet</code> (<code>walletName</code> in older builds)</td><td>The name of the wallet you last connected, such as "Phantom"</td><td>Reconnects the same wallet next time. Never an address, key or balance.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>These count as storage you asked for (a setting you chose, or a wallet you connected), so no consent is needed for them. The demo works without them; if your browser blocks storage, it just forgets your choices.</p>
+
+        <h2 id="third-parties">Who your browser talks to</h2>
+        <p>No data is sent to us. Your browser does connect to these services, each under its own privacy policy:</p>
+        <ul>
+          <li><strong>GitHub Pages</strong> hosts this site. Like any web host, GitHub receives your IP address and browser details when you load a page, and may keep them in server logs. See <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener noreferrer">GitHub's privacy statement</a>.</li>
+          <li><strong>Solana devnet RPC</strong> (<code>api.devnet.solana.com</code>): the live stats on the <a href="slw.html">$SLW page</a> and the demo's devnet panel read public blockchain data from it, so its operator sees your IP address. Requests carry no cookies and no referrer.</li>
+          <li><strong>Your wallet</strong>, if you connect one: a browser extension or app you installed, under its own policy. The site never sees your keys or seed phrase.</li>
+          <li><strong>Links you click</strong> (Solana Explorer, help organisations, GitHub) take you to other sites with their own policies.</li>
+        </ul>
+
+        <h2 id="personal-data">Personal data</h2>
+        <ul>
+          <li>We collect <strong>no personal data</strong>: there are no accounts, sign-ups, email lists or contact forms (the site's security policy blocks form submissions altogether).</li>
+          <li>We don't sell, share or profile anything, because we don't have anything.</li>
+          <li>We don't look up your location. That's also why <a href="legal.html#restricted">country restrictions</a> are terms of use rather than an automatic block.</li>
+        </ul>
+
+        <h2 id="blockchain">The blockchain is public</h2>
+        <p>If you send a transaction on devnet (create a profile, set limits, spin, sell $SLW), it's recorded on a public blockchain together with your wallet address. Anyone can read it, it's permanent, and nobody, including us, can delete it. Your player profile account (limits, self-exclusion, totals) is public on-chain in the same way.</p>
+
+        <h2 id="clear">How to clear it</h2>
+        <ul>
+          <li>Turn sound and calm mode back to their defaults in the demo, or disconnect your wallet there.</li>
+          <li>Or delete this site's data in your browser settings (look for "site data" or "cookies and site data" for <code>0byteblitz.github.io</code>). That removes every key above at once.</li>
+          <li>Private or incognito windows forget everything when you close them.</li>
+        </ul>
+
+        <h2 id="changes">Changes</h2>
+        <p>If what we store or who your browser talks to changes, this page changes first, and anything optional will need your consent before it's used. Questions about security or privacy: open a <a href="https://github.com/0ByteBlitz/solwin-site/security/advisories/new" rel="noopener noreferrer">private advisory</a>. See also <a href="legal.html">legal and restrictions</a>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="legal.html">Legal</a><a href="cookies.html">Cookies</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
+      <p>SolWin runs on Solana devnet with play money. It is not licensed or regulated by any authority. 18+ only, and not available in <a href="legal.html#restricted">restricted jurisdictions</a>. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer. No cookies, no tracking. Gambling can be addictive: <a href="legal.html#help">get help</a>.</p>
+      <div class="bigmark" aria-hidden="true">SolWin</div>
+    </div>
+  </footer>
+</body>
+</html>
