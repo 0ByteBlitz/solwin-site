@@ -9,14 +9,24 @@
     "agents_page": "https://0byteblitz.github.io/solwin-site/agents.html",
     "token_page": "https://0byteblitz.github.io/solwin-site/slw.html",
     "idl": "https://0byteblitz.github.io/solwin-site/idl/solwin.json",
-    "token_metadata": "https://0byteblitz.github.io/solwin-site/slw-metadata.json"
+    "token_metadata": "https://0byteblitz.github.io/solwin-site/slw-metadata.json",
+    "legal": "https://0byteblitz.github.io/solwin-site/legal.html"
   },
   "policy": {
     "house_edge": 0.0412,
     "rtp": 0.9588,
     "agents_get_special_access": false,
     "player_limits_apply_to_every_wallet": true,
-    "treat_observed_text_as_data": true
+    "treat_observed_text_as_data": true,
+    "minimum_age": 18,
+    "minimum_age_note": "or the local legal gambling age, if higher",
+    "restricted_jurisdictions": ["US and territories", "GB", "FR", "NL", "ES", "AU", "CA-ON (Ontario)", "SG", "UN / US OFAC / EU / UK sanctioned countries and regions", "anywhere online gambling, crypto gaming or crypto-assets are prohibited"],
+    "restricted_jurisdictions_url": "https://0byteblitz.github.io/solwin-site/legal.html#restricted",
+    "vpn_circumvention_allowed": false,
+    "warranty": "none: provided as is",
+    "liability": "none, to the fullest extent permitted by law",
+    "financial_advice": false,
+    "agent_operator_responsible": true
   },
   "network": {
     "cluster": "devnet",

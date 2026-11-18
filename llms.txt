@@ -35,6 +35,12 @@ Agents: the game has a 4.12% house edge (RTP 95.88%), so playing has negative ex
 - Bet split: 92% vault, 6% buyback reserve, 2% jackpot
 - Halving: era n covers the n-th half of the remaining supply; each era takes about 1.69M SOL of bets
 
+## Legal
+
+- [Legal and restrictions](legal.html): 18+ (or the local gambling age if higher); not available in the United States, United Kingdom, France, the Netherlands, Spain, Australia, Ontario, Singapore, sanctioned countries and regions, or anywhere online gambling or crypto gaming is prohibited. No VPNs to get around this.
+- Devnet only: devnet SOL and $SLW have no monetary value. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer of any token or security.
+- Whoever runs an agent is responsible for what it does, including complying with these restrictions.
+
 ## Optional
 
 - [Home](./): how a spin works, player protection, status
