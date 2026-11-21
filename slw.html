@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src https://api.devnet.solana.com; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="no-referrer">
-  <title>$SLW: the loss-mined token</title>
-  <meta name="description" content="$SLW is mined only by losing SolWin spins: 1B hard cap, no premine, fully backed by a SOL reserve and burned when sold back at the floor.">
+  <title>$SLW: the SolWin game token</title>
+  <meta name="description" content="$SLW is a game token minted by non-winning SolWin spins: 1B hard cap, no premine. Can be sold to the program reserve at the floor, subject to a daily cap, and is burned when sold. No promise of value. Devnet, play money, 18+. Not available in all regions.">
   <meta name="theme-color" content="#07070d">
   <link rel="icon" type="image/svg+xml" href="assets/slw-logo.svg">
   <link rel="stylesheet" href="assets/style.css">
@@ -14,7 +14,7 @@
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <div class="banner"><div class="wrap"><strong>Devnet · play money</strong> $SLW is part of what a player gets back from a spin, not an investment, and there's nothing here to buy. 18+ only; not available in <a href="legal.html#restricted">restricted countries</a>.</div></div>
+  <div class="banner"><div class="wrap"><strong>Devnet, play money, 18+</strong> $SLW is part of what a player gets back from a spin, not an investment, and there's nothing here to buy. Not available in all regions; see <a href="legal.html#restricted">restricted countries</a>.</div></div>
   <header class="site-header">
     <div class="wrap">
       <a class="brand" href="./"><img src="assets/solwin-mark.svg" alt="" width="36" height="36"><span>Sol<b>Win</b></span></a>
@@ -27,8 +27,8 @@
     </div>
   </header>
   <div class="ticker" aria-hidden="true"><div class="ticker-track">
-    <span>RTP <b>95.88%</b></span><span>House edge <b>4.12%</b></span><span>Losses mine <b>$SLW</b></span><span>Floor <b>0.0002 SOL</b></span><span>Cap <b>1,000,000,000 SLW</b></span><span>Premine <b>0</b></span><span>Randomness <b>MagicBlock VRF</b></span><span>Network <b>devnet</b></span>
-    <span>RTP <b>95.88%</b></span><span>House edge <b>4.12%</b></span><span>Losses mine <b>$SLW</b></span><span>Floor <b>0.0002 SOL</b></span><span>Cap <b>1,000,000,000 SLW</b></span><span>Premine <b>0</b></span><span>Randomness <b>MagicBlock VRF</b></span><span>Network <b>devnet</b></span>
+    <span>RTP <b>95.88%</b></span><span>House edge <b>4.12%</b></span><span>Non-winning spins can mint <b>$SLW</b></span><span>Floor <b>0.0002 SOL</b></span><span>Cap <b>1,000,000,000 SLW</b></span><span>Premine <b>0</b></span><span>Randomness <b>MagicBlock VRF</b></span><span>Network <b>devnet</b></span>
+    <span>RTP <b>95.88%</b></span><span>House edge <b>4.12%</b></span><span>Non-winning spins can mint <b>$SLW</b></span><span>Floor <b>0.0002 SOL</b></span><span>Cap <b>1,000,000,000 SLW</b></span><span>Premine <b>0</b></span><span>Randomness <b>MagicBlock VRF</b></span><span>Network <b>devnet</b></span>
   </div></div>
 
   <main id="main">
@@ -36,14 +36,14 @@
       <div class="wrap hero-split">
         <div>
           <p class="eyebrow">$SLW · SolWin token</p>
-          <h1>The <span class="hl">loss-mined</span> token.</h1>
-          <p class="lede">You can't buy $SLW from us and nobody got an allocation. The only way new $SLW exists is a spin that didn't pay. <strong>Mined by losing. Backed by the house. Burned on exit.</strong></p>
+          <h1>The <span class="hl">SolWin</span> game token.</h1>
+          <p class="lede">You can't buy $SLW from us and nobody got an allocation. The only way new $SLW exists is a spin that didn't pay. <strong>Minted by non-winning spins. Sold back at a fixed floor, subject to a daily cap. Burned on exit.</strong> No promise of value.</p>
           <div class="cta">
             <a class="btn primary" href="#economics">Token economics</a>
             <a class="btn" href="#burn">Buyback &amp; burn</a>
           </div>
         </div>
-        <img class="hero-mark" src="assets/slw-logo.svg" alt="The $SLW mark: a lime coin with a rising step" width="320" height="320">
+        <img class="hero-mark" src="assets/slw-logo.svg" alt="The $SLW mark: a lime coin with a step" width="320" height="320">
       </div>
     </section>
 
@@ -74,7 +74,7 @@
             <dl class="kv">
               <dt>Name</dt><dd>SolWin</dd>
               <dt>Ticker</dt><dd><b>$SLW</b></dd>
-              <dt>Tagline</dt><dd>Lose a spin. Mine a coin.</dd>
+              <dt>Tagline</dt><dd>Non-winning spins can mint a coin.</dd>
               <dt>Chain</dt><dd>Solana (SPL token, 6 decimals)</dd>
               <dt>Mint (devnet)</dt><dd><a class="mono" href="https://explorer.solana.com/address/6bFqxm4DhCweQsRRYokk9Hpmwtkmk7rdWdSikphg5fXt?cluster=devnet" rel="noopener noreferrer">6bFqxm4DhCweQsRRYokk9Hpmwtkmk7rdWdSikphg5fXt</a></dd>
               <dt>Metadata</dt><dd><a href="slw-metadata.json">slw-metadata.json</a></dd>
@@ -82,7 +82,7 @@
           </div>
           <div class="card">
             <h3>The mark</h3>
-            <p>A lime coin with a rising step: the floor, which only ever moves up. Lime is $SLW, violet is SolWin, ink is the background they share.</p>
+            <p>A lime coin with a step: the fixed buy-back floor, subject to a daily cap. Lime is $SLW, violet is SolWin, ink is the background they share.</p>
             <h3 class="spaced">The voice</h3>
             <p>Numbers first, odds stated plainly, no "to the moon". A loss is called a loss. Every claim on this page can be checked on-chain.</p>
           </div>
@@ -95,9 +95,9 @@
         <h2>Token economics</h2>
         <p class="section-lede">Fair launch in the literal sense: no premine, no team or investor tokens, no airdrop. The team is paid from the house edge, never from $SLW.</p>
         <div class="grid four">
-          <div class="stat"><div class="value lime">100%</div><div class="label">mined by play. 0 premine, 0 team, 0 investors, 0 airdrop.</div></div>
+          <div class="stat"><div class="value lime">100%</div><div class="label">minted by play. 0 premine, 0 team, 0 investors, 0 airdrop.</div></div>
           <div class="stat"><div class="value">1B</div><div class="label">hard cap. Burns don't free room under it.</div></div>
-          <div class="stat"><div class="value violet">≈296</div><div class="label">$SLW mined per SOL wagered in era 0</div></div>
+          <div class="stat"><div class="value violet">≈296</div><div class="label">$SLW minted per SOL wagered in era 0</div></div>
           <div class="stat"><div class="value">1.69M</div><div class="label">SOL of bets per era: every halving takes the same volume</div></div>
         </div>
 
@@ -129,7 +129,7 @@
           </div>
           <div class="card chart-card">
             <h3>Floor ceiling per era <span class="badge proposed">Proposed</span></h3>
-            <p class="muted small">SOL per $SLW. With the floor ratchet, the floor may double each halving, so what a losing spin mines keeps the same value.</p>
+            <p class="muted small">SOL per $SLW. Ceiling of a proposed rule that is not built. The floor is fixed at 0.0002 SOL in the current build.</p>
             <svg class="chart" viewBox="0 0 480 260" role="img" aria-label="Floor ceiling per era: era 0 0.0002 SOL, era 1 0.0004, era 2 0.0008, era 3 0.0016, era 4 0.0032, era 5 0.0064">
               <line class="axis" x1="20" y1="220" x2="470" y2="220"/>
               <rect class="bar-violet" x="30" y="214.4" width="56" height="5.6" rx="1"/>
@@ -177,7 +177,7 @@
 
     <section aria-labelledby="backing">
       <div class="wrap">
-        <h2 id="backing">Backed by a SOL reserve</h2>
+        <h2 id="backing">The SOL reserve</h2>
         <p class="section-lede">6% of every bet goes to the buyback reserve. On average, a SOL of bets mints $SLW worth 0.0593 SOL at the floor, and the reserve receives 0.06 SOL for it: across all bets, the reserve takes in slightly more than the floor value it has to back. That&#39;s an average, not a per-spin guarantee: a single losing spin can mint up to 0.2 SOL of floor value from a 0.06 SOL contribution, so early on, or after a lucky run, the reserve can hold less than every token&#39;s floor value. Redemptions are paid only from what the reserve holds, within its daily cap.</p>
         <div class="grid three">
           <div class="stat"><div class="value lime">0.0002</div><div class="label">SOL per $SLW: the floor. Fixed at launch; no admin setting can change it.</div></div>
@@ -194,13 +194,13 @@
         <div class="grid three">
           <div class="card job">
             <h3>Floor redemption <span class="badge live">Live</span></h3>
-            <p>Sell any amount to the reserve at the floor with <code>buyback</code>. The tokens burn in the same instruction. Works while the game is paused and while you're self-excluded.</p>
-            <p>When the market dips below the floor, anyone can buy and redeem. That arbitrage pulls the price back up, and it's the first job we offer <a href="agents.html">agents</a>.</p>
+            <p>Sell any amount to the reserve at the floor with <code>buyback</code>, subject to a daily cap (at most 10% of the reserve per rolling day). The tokens burn in the same instruction. Works while the game is paused and while you're self-excluded.</p>
+            <p>If the market dips below the floor, anyone can buy and redeem within the daily cap. It's the first job we offer <a href="agents.html">agents</a>. No price is promised.</p>
           </div>
           <div class="card job">
             <h3>Floor ratchet <span class="badge proposed">Proposed</span></h3>
             <p>From era 1 the reserve grows faster than the tokens it backs. A permissionless <code>ratchet_floor</code> raises the floor by up to 5% a week while backing stays ≥ 125%, never above 0.0002 × 2<sup>era</sup>, and never down.</p>
-            <p>Result: the floor can double every halving while RTP stays 95.88%.</p>
+            <p>Proposed only. The floor is fixed in the current build.</p>
           </div>
           <div class="card job">
             <h3>Revenue buyback <span class="badge proposed">Phase 2</span></h3>
@@ -222,7 +222,7 @@ ratchet_floor()   // anyone can call it
 
         <div class="grid two spaced-grid">
           <div class="card"><h3>Sinks on the roadmap <span class="badge proposed">Proposed</span></h3><p><b>Spin credits:</b> burn $SLW for a bet worth its floor value. <b>Jackpot tickets:</b> burn a fixed amount for one extra jackpot draw, a pure burn that raises backing for every other holder.</p></div>
-          <div class="callout warn"><p><strong>What's promised, and what isn't.</strong> The code promises the cap, mining only on losses, redemption at the floor, the daily cap and burning on redemption. It promises no market price above the floor and no return. The game has a 4.12% house edge.</p></div>
+          <div class="callout warn"><p><strong>What's promised, and what isn't.</strong> The code promises the cap, minting only on non-winning spins, redemption at the floor, the daily cap and burning on redemption. It promises no market price above the floor and no return. The game has a 4.12% house edge.</p></div>
         </div>
       </div>
     </section>

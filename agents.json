@@ -1,7 +1,7 @@
 {
   "schema": "solwin-agents/1",
   "name": "SolWin",
-  "summary": "On-chain Solana slot (devnet, play money): every spin pays SOL or mines $SLW. $SLW is mined only by losing spins and can be sold to a program-owned reserve at a fixed floor, which burns it.",
+  "summary": "On-chain Solana slot (devnet, play money): a win pays SOL and a non-winning spin can mint $SLW. $SLW is minted only by non-winning spins and can be sold to a program-owned reserve at a fixed floor, subject to a daily cap, which burns it. No promise of value.",
   "updated": "2026-11-18",
   "site": "https://0byteblitz.github.io/solwin-site/",
   "docs": {
@@ -96,12 +96,15 @@
   },
   "instructions": {
     "player": ["init_player", "set_limits", "self_exclude", "place_bet", "cancel_spin", "buyback"],
-    "anyone": ["fund"],
+    "anyone": ["fund", "execute_withdrawal"],
     "vrf_callback_only": ["settle_spin"],
-    "admin_only": ["initialize", "update_config", "propose_admin", "accept_admin", "migrate_randomness", "pause"]
+    "admin_only": ["initialize", "update_config", "migrate_randomness", "init_revenue", "deposit_bankroll", "raise_vault_floor", "request_withdrawal", "start_wind_down", "propose_admin", "propose_pauser"],
+    "admin_or_pauser": ["pause", "cancel_withdrawal", "cancel_pauser_change"],
+    "pauser_only": ["cancel_admin_change"],
+    "proposed_key_only": ["accept_admin", "accept_pauser"]
   },
-  "events": ["SpinSettled", "SpinCancelled", "BoughtBack", "LimitsChanged", "SelfExcluded", "ConfigChanged", "AdminProposed", "AdminChanged", "RandomnessProviderChanged"],
-  "errors": { "first_code": 6000, "last_code": 6019, "source": "idl.errors" },
+  "events": ["AdminChangeCancelled", "AdminChangeProposed", "AdminChanged", "BankrollDeposited", "BoughtBack", "ConfigChanged", "LimitsChanged", "PauserChangeCancelled", "PauserChangeProposed", "PauserChanged", "RandomnessProviderChanged", "RevenueInitialized", "SelfExcluded", "SpinCancelled", "SpinSettled", "VaultFloorRaised", "WindDownCancelled", "WindDownStarted", "WithdrawalCancelled", "WithdrawalExecuted", "WithdrawalRequested"],
+  "errors": { "first_code": 6000, "last_code": 6035, "source": "idl.errors" },
   "jobs": [
     {
       "id": "floor-keeper",
@@ -121,7 +124,7 @@
       "id": "ratchet-cranker",
       "status": "proposed",
       "what": "Call ratchet_floor when 7 days have passed and backing >= 125%.",
-      "earns": "fixed SOL tip, only if the floor rises",
+      "earns": "fixed SOL tip, proposed only; not built",
       "requires": "program upgrade"
     },
     {

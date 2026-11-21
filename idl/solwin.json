@@ -10,7 +10,10 @@
     {
       "name": "accept_admin",
       "docs": [
-        "Step 2: the proposed key signs to take over."
+        "Step 2: the proposed key signs to become the admin, once the notice",
+        "period is over (so it's a key someone controls, not a typo). Nothing",
+        "else changes: pending withdrawals stay public and vetoable, and the",
+        "upgrade authority is separate."
       ],
       "discriminator": [
         112,
@@ -25,6 +28,9 @@
       "accounts": [
         {
           "name": "new_admin",
+          "docs": [
+            "Must be `revenue.proposed_admin`; checked in the handler."
+          ],
           "signer": true
         },
         {
@@ -41,6 +47,93 @@
                   102,
                   105,
                   103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "accept_pauser",
+      "docs": [
+        "Step 2: the proposed key signs to become the pauser, once the notice",
+        "period is over (so it's a key someone controls). Bumps the pauser epoch,",
+        "which voids any withdrawal requested under the old pauser."
+      ],
+      "discriminator": [
+        224,
+        60,
+        244,
+        96,
+        126,
+        18,
+        162,
+        64
+      ],
+      "accounts": [
+        {
+          "name": "new_pauser",
+          "docs": [
+            "Must be `revenue.proposed_pauser`; checked in the handler."
+          ],
+          "signer": true
+        },
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
                 ]
               }
             ]
@@ -234,6 +327,137 @@
       ]
     },
     {
+      "name": "cancel_admin_change",
+      "docs": [
+        "Only the pauser cancels a pending admin change. The admin can't: a thief",
+        "holding a copy of the admin key could otherwise cancel every legitimate",
+        "rotation forever. (The proposed admin can't either; the pauser already",
+        "covers a mistaken or hostile proposal, and fewer cancel paths is safer.)"
+      ],
+      "discriminator": [
+        231,
+        68,
+        100,
+        173,
+        150,
+        100,
+        93,
+        57
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The pauser only; checked in the handler."
+          ],
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "cancel_pauser_change",
+      "docs": [
+        "The current pauser or the admin cancels a pending pauser change."
+      ],
+      "discriminator": [
+        152,
+        194,
+        196,
+        47,
+        49,
+        251,
+        26,
+        225
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The current pauser or the admin; checked in the handler."
+          ],
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "cancel_spin",
       "docs": [
         "Unsticks a spin that was never settled (the VRF callback never came).",
@@ -290,9 +514,273 @@
       "args": []
     },
     {
+      "name": "cancel_withdrawal",
+      "docs": [
+        "The admin or the pauser can cancel a pending withdrawal (the pauser so a",
+        "separate hot key can veto a request made with a stolen admin key)."
+      ],
+      "discriminator": [
+        183,
+        104,
+        181,
+        250,
+        28,
+        128,
+        210,
+        70
+      ],
+      "accounts": [
+        {
+          "name": "signer",
+          "docs": [
+            "The admin or the pauser; checked in the handler."
+          ],
+          "signer": true
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deposit_bankroll",
+      "docs": [
+        "Admin only. Adds creator bankroll to the vault. Unlike `fund`, this SOL",
+        "stays part of the creator's equity and can be withdrawn later."
+      ],
+      "discriminator": [
+        96,
+        240,
+        186,
+        95,
+        11,
+        97,
+        160,
+        248
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "amount",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "execute_withdrawal",
+      "docs": [
+        "Anyone, once the request has unlocked and before it lapses. Every rule",
+        "is checked again against current balances, pause and wind-down state.",
+        "",
+        "The pauser that could veto the request must have held the role for the",
+        "whole notice period: execution fails if the pauser changed at any time",
+        "after the request, and while any pauser change is pending."
+      ],
+      "discriminator": [
+        113,
+        121,
+        203,
+        232,
+        137,
+        139,
+        248,
+        249
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "reserve",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  115,
+                  101,
+                  114,
+                  118,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "recipient",
+          "writable": true
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "fund",
       "docs": [
-        "Anyone can add SOL to the vault, the buyback reserve or the jackpot pool."
+        "Anyone can add SOL to the vault, the buyback reserve or the jackpot pool.",
+        "It's a donation: SOL funded into the vault or reserve is counted so it",
+        "can never be withdrawn as creator equity or reserve surplus."
       ],
       "discriminator": [
         218,
@@ -316,6 +804,29 @@
             "Any of the three treasuries (the type check proves it is one of ours)."
           ],
           "writable": true
+        },
+        {
+          "name": "revenue",
+          "docs": [
+            "Required, so a vault or reserve donation can't skip being counted."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
         },
         {
           "name": "system_program",
@@ -376,6 +887,119 @@
         }
       ],
       "args": []
+    },
+    {
+      "name": "init_revenue",
+      "docs": [
+        "Admin only, once. Creates the revenue ledger. Everything already in the",
+        "vault and the reserve counts as donated, so none of it is claimable.",
+        "The pauser must be set and separate from the admin: the withdrawal veto",
+        "is worthless if one key holds both roles."
+      ],
+      "discriminator": [
+        52,
+        14,
+        180,
+        84,
+        93,
+        34,
+        42,
+        219
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "writable": true,
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "reserve",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  115,
+                  101,
+                  114,
+                  118,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "vault_floor",
+          "type": "u64"
+        }
+      ]
     },
     {
       "name": "initialize",
@@ -935,8 +1559,13 @@
     {
       "name": "propose_admin",
       "docs": [
-        "Step 1 of an admin handover. Nothing changes until the new key accepts,",
-        "so a typo can't hand the program to a key nobody controls."
+        "Admin only. Step 1 of an admin handover: public for ADMIN_CHANGE_DELAY,",
+        "during which only the pauser can cancel it. One at a time, so the clock",
+        "can't be reset to a shorter one. The pauser is the check on a stolen",
+        "admin key: it can always undo a handover to the thief, and the thief",
+        "can't undo the team's.",
+        "The program's own addresses can't be admin (nobody could ever sign), nor",
+        "can the current admin or pauser (one key never holds both roles)."
       ],
       "discriminator": [
         121,
@@ -958,7 +1587,6 @@
         },
         {
           "name": "config",
-          "writable": true,
           "pda": {
             "seeds": [
               {
@@ -974,11 +1602,309 @@
               }
             ]
           }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
         }
       ],
       "args": [
         {
           "name": "new_admin",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "propose_pauser",
+      "docs": [
+        "Admin only. Step 1 of a pauser change: public for PAUSER_CHANGE_DELAY,",
+        "during which the current pauser (or the admin) can cancel it. One at a",
+        "time, so the clock can't be reset to a shorter one."
+      ],
+      "discriminator": [
+        71,
+        207,
+        229,
+        8,
+        217,
+        251,
+        234,
+        163
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "new_pauser",
+          "type": "pubkey"
+        }
+      ]
+    },
+    {
+      "name": "raise_vault_floor",
+      "docs": [
+        "Admin only. The vault floor can only go up, and never above what the",
+        "vault holds now. Without that bound one call (say `u64::MAX`) would",
+        "freeze every live withdrawal until a wind-down; with it the worst case",
+        "is \"no live withdrawals until the vault grows past the floor\"."
+      ],
+      "discriminator": [
+        207,
+        168,
+        42,
+        79,
+        69,
+        253,
+        191,
+        59
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "new_floor",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "request_withdrawal",
+      "docs": [
+        "Admin only. Announces a withdrawal; it can execute after WITHDRAW_DELAY.",
+        "The amount must be within the source's limit now and again at execution."
+      ],
+      "discriminator": [
+        251,
+        85,
+        121,
+        205,
+        56,
+        201,
+        12,
+        177
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "vault",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  118,
+                  97,
+                  117,
+                  108,
+                  116
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "reserve",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  115,
+                  101,
+                  114,
+                  118,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": [
+        {
+          "name": "source",
+          "type": {
+            "defined": {
+              "name": "WithdrawSource"
+            }
+          }
+        },
+        {
+          "name": "amount",
+          "type": "u64"
+        },
+        {
+          "name": "recipient",
           "type": "pubkey"
         }
       ]
@@ -1365,10 +2291,79 @@
       ]
     },
     {
+      "name": "start_wind_down",
+      "docs": [
+        "Admin only, while paused. After WIND_DOWN_DELAY of continuous pause the",
+        "creator can withdraw all of their equity (floor and 10% cap lifted).",
+        "Unpausing cancels it."
+      ],
+      "discriminator": [
+        16,
+        113,
+        225,
+        197,
+        58,
+        222,
+        48,
+        141
+      ],
+      "accounts": [
+        {
+          "name": "admin",
+          "signer": true,
+          "relations": [
+            "config"
+          ]
+        },
+        {
+          "name": "config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "revenue",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "update_config",
       "docs": [
         "Admin only. The randomness program, floor price, bet split and paytable",
-        "can never be changed after initialize; only these bounded settings can."
+        "can never be changed after initialize; only these bounded settings can.",
+        "Unpausing also cancels a wind-down. The pauser is not one of them: it",
+        "vetoes withdrawals, so it only changes through the time-locked",
+        "`propose_pauser` / `accept_pauser`."
       ],
       "discriminator": [
         29,
@@ -1406,6 +2401,29 @@
               }
             ]
           }
+        },
+        {
+          "name": "revenue",
+          "docs": [
+            "Unpausing clears a wind-down here."
+          ],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  114,
+                  101,
+                  118,
+                  101,
+                  110,
+                  117,
+                  101
+                ]
+              }
+            ]
+          }
         }
       ],
       "args": [
@@ -1413,12 +2431,6 @@
           "name": "min_bet",
           "type": {
             "option": "u64"
-          }
-        },
-        {
-          "name": "pauser",
-          "type": {
-            "option": "pubkey"
           }
         },
         {
@@ -1456,6 +2468,19 @@
       ]
     },
     {
+      "name": "Revenue",
+      "discriminator": [
+        68,
+        182,
+        87,
+        101,
+        248,
+        242,
+        210,
+        76
+      ]
+    },
+    {
       "name": "SpinRequest",
       "discriminator": [
         191,
@@ -1484,6 +2509,32 @@
   ],
   "events": [
     {
+      "name": "AdminChangeCancelled",
+      "discriminator": [
+        188,
+        179,
+        107,
+        14,
+        160,
+        252,
+        35,
+        190
+      ]
+    },
+    {
+      "name": "AdminChangeProposed",
+      "discriminator": [
+        166,
+        24,
+        225,
+        11,
+        116,
+        48,
+        161,
+        251
+      ]
+    },
+    {
       "name": "AdminChanged",
       "discriminator": [
         232,
@@ -1497,16 +2548,16 @@
       ]
     },
     {
-      "name": "AdminProposed",
+      "name": "BankrollDeposited",
       "discriminator": [
-        129,
-        249,
-        226,
-        227,
-        199,
-        82,
-        110,
-        243
+        156,
+        208,
+        64,
+        255,
+        145,
+        98,
+        176,
+        92
       ]
     },
     {
@@ -1549,6 +2600,45 @@
       ]
     },
     {
+      "name": "PauserChangeCancelled",
+      "discriminator": [
+        128,
+        81,
+        95,
+        242,
+        171,
+        246,
+        170,
+        251
+      ]
+    },
+    {
+      "name": "PauserChangeProposed",
+      "discriminator": [
+        123,
+        84,
+        233,
+        153,
+        139,
+        159,
+        157,
+        180
+      ]
+    },
+    {
+      "name": "PauserChanged",
+      "discriminator": [
+        142,
+        157,
+        158,
+        87,
+        127,
+        8,
+        119,
+        55
+      ]
+    },
+    {
       "name": "RandomnessProviderChanged",
       "discriminator": [
         144,
@@ -1559,6 +2649,19 @@
         235,
         72,
         69
+      ]
+    },
+    {
+      "name": "RevenueInitialized",
+      "discriminator": [
+        54,
+        196,
+        234,
+        60,
+        93,
+        107,
+        94,
+        239
       ]
     },
     {
@@ -1598,6 +2701,84 @@
         136,
         158,
         67
+      ]
+    },
+    {
+      "name": "VaultFloorRaised",
+      "discriminator": [
+        29,
+        89,
+        34,
+        111,
+        151,
+        95,
+        233,
+        224
+      ]
+    },
+    {
+      "name": "WindDownCancelled",
+      "discriminator": [
+        36,
+        248,
+        209,
+        20,
+        139,
+        134,
+        202,
+        137
+      ]
+    },
+    {
+      "name": "WindDownStarted",
+      "discriminator": [
+        204,
+        55,
+        238,
+        182,
+        15,
+        183,
+        229,
+        21
+      ]
+    },
+    {
+      "name": "WithdrawalCancelled",
+      "discriminator": [
+        119,
+        175,
+        207,
+        80,
+        186,
+        237,
+        229,
+        9
+      ]
+    },
+    {
+      "name": "WithdrawalExecuted",
+      "discriminator": [
+        37,
+        78,
+        199,
+        192,
+        51,
+        68,
+        173,
+        162
+      ]
+    },
+    {
+      "name": "WithdrawalRequested",
+      "discriminator": [
+        75,
+        207,
+        21,
+        12,
+        160,
+        102,
+        150,
+        55
       ]
     }
   ],
@@ -1701,9 +2882,125 @@
       "code": 6019,
       "name": "RandomnessProviderNotRetired",
       "msg": "The randomness provider is not a retired one, so it can't be migrated"
+    },
+    {
+      "code": 6020,
+      "name": "WithdrawalAlreadyPending",
+      "msg": "A withdrawal is already pending"
+    },
+    {
+      "code": 6021,
+      "name": "NoWithdrawalPending",
+      "msg": "No withdrawal is pending"
+    },
+    {
+      "code": 6022,
+      "name": "WithdrawalTooSoon",
+      "msg": "Only one withdrawal per week"
+    },
+    {
+      "code": 6023,
+      "name": "WithdrawalNotUnlocked",
+      "msg": "The withdrawal is still in its notice period"
+    },
+    {
+      "code": 6024,
+      "name": "WithdrawalExpired",
+      "msg": "The withdrawal lapsed; request it again"
+    },
+    {
+      "code": 6025,
+      "name": "WithdrawalOverLimit",
+      "msg": "The amount is over what can be withdrawn now"
+    },
+    {
+      "code": 6026,
+      "name": "InvalidRecipient",
+      "msg": "Invalid withdrawal recipient"
+    },
+    {
+      "code": 6027,
+      "name": "GameNotPaused",
+      "msg": "The game must be paused first"
+    },
+    {
+      "code": 6028,
+      "name": "PauserChangePending",
+      "msg": "A pauser change is pending"
+    },
+    {
+      "code": 6029,
+      "name": "NoPauserChangePending",
+      "msg": "No pauser change is pending"
+    },
+    {
+      "code": 6030,
+      "name": "PauserChangeNotReady",
+      "msg": "The pauser change is still in its notice period"
+    },
+    {
+      "code": 6031,
+      "name": "PauserChangedSinceRequest",
+      "msg": "The pauser changed after this withdrawal was requested; cancel it and request again"
+    },
+    {
+      "code": 6032,
+      "name": "AdminChangePending",
+      "msg": "An admin change is pending"
+    },
+    {
+      "code": 6033,
+      "name": "NoAdminChangePending",
+      "msg": "No admin change is pending"
+    },
+    {
+      "code": 6034,
+      "name": "AdminChangeNotReady",
+      "msg": "The admin change is still in its notice period"
+    },
+    {
+      "code": 6035,
+      "name": "InvalidPauser",
+      "msg": "The pauser must be set and be a different key from the admin"
     }
   ],
   "types": [
+    {
+      "name": "AdminChangeCancelled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "by",
+            "type": "pubkey"
+          },
+          {
+            "name": "proposed",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "AdminChangeProposed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "current",
+            "type": "pubkey"
+          },
+          {
+            "name": "proposed",
+            "type": "pubkey"
+          },
+          {
+            "name": "ready_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
     {
       "name": "AdminChanged",
       "type": {
@@ -1721,17 +3018,17 @@
       }
     },
     {
-      "name": "AdminProposed",
+      "name": "BankrollDeposited",
       "type": {
         "kind": "struct",
         "fields": [
           {
-            "name": "current",
-            "type": "pubkey"
+            "name": "amount",
+            "type": "u64"
           },
           {
-            "name": "proposed",
-            "type": "pubkey"
+            "name": "deposited",
+            "type": "u64"
           }
         ]
       }
@@ -1771,7 +3068,8 @@
           {
             "name": "pending_admin",
             "docs": [
-              "Set by propose_admin; becomes admin when it signs accept_admin."
+              "Unused since admin handovers moved to `Revenue.proposed_admin`. Kept",
+              "(and never written) so the deployed `Config` layout doesn't change."
             ],
             "type": "pubkey"
           },
@@ -1955,6 +3253,58 @@
       }
     },
     {
+      "name": "PauserChangeCancelled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "by",
+            "type": "pubkey"
+          },
+          {
+            "name": "proposed",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PauserChangeProposed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "current",
+            "type": "pubkey"
+          },
+          {
+            "name": "proposed",
+            "type": "pubkey"
+          },
+          {
+            "name": "ready_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PauserChanged",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "previous",
+            "type": "pubkey"
+          },
+          {
+            "name": "current",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "PlayerProfile",
       "type": {
         "kind": "struct",
@@ -2065,6 +3415,160 @@
           {
             "name": "current",
             "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Revenue",
+      "docs": [
+        "Creator revenue ledger (seeds `[\"revenue\"]`). See docs/creator-revenue-design.md."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "deposited",
+            "docs": [
+              "Creator bankroll added with `deposit_bankroll`. Recoverable."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "donated",
+            "docs": [
+              "SOL added to the vault with `fund`, plus the vault balance at `init_revenue`. Never recoverable."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "reserve_donated",
+            "docs": [
+              "SOL added to the reserve with `fund`, plus the reserve balance at `init_revenue`. Never withdrawable."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "vault_withdrawn",
+            "docs": [
+              "All SOL the creator has taken out of the vault."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "reserve_withdrawn",
+            "docs": [
+              "All SOL the creator has taken out of the reserve."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "vault_floor",
+            "docs": [
+              "While live, the vault never drops below this. Can only go up."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "wind_down_started_at",
+            "docs": [
+              "0, or when `start_wind_down` ran."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "pending_source",
+            "type": {
+              "defined": {
+                "name": "WithdrawSource"
+              }
+            }
+          },
+          {
+            "name": "pending_amount",
+            "docs": [
+              "0 = no request pending."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "pending_recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "pending_unlock_at",
+            "type": "i64"
+          },
+          {
+            "name": "pending_pauser_epoch",
+            "docs": [
+              "`pauser_epoch` when the pending withdrawal was requested."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "last_withdrawal_at",
+            "type": "i64"
+          },
+          {
+            "name": "proposed_pauser",
+            "docs": [
+              "Pauser named by `propose_pauser`; default = no change pending."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "proposed_pauser_ready_at",
+            "docs": [
+              "When the proposed pauser can accept."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "pauser_epoch",
+            "docs": [
+              "Number of pauser changes since `init_revenue`."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "proposed_admin",
+            "docs": [
+              "Admin named by `propose_admin`; default = no change pending. (Not",
+              "`Config.pending_admin`, which stays in the layout but is never written.)"
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "proposed_admin_ready_at",
+            "docs": [
+              "When the proposed admin can accept."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RevenueInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "vault_floor",
+            "type": "u64"
+          },
+          {
+            "name": "donated",
+            "type": "u64"
+          },
+          {
+            "name": "reserve_donated",
+            "type": "u64"
           }
         ]
       }
@@ -2209,6 +3713,135 @@
           {
             "name": "bump",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "VaultFloorRaised",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "previous",
+            "type": "u64"
+          },
+          {
+            "name": "current",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WindDownCancelled",
+      "type": {
+        "kind": "struct",
+        "fields": []
+      }
+    },
+    {
+      "name": "WindDownStarted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "at",
+            "type": "i64"
+          },
+          {
+            "name": "ready_at",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawSource",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Vault"
+          },
+          {
+            "name": "Reserve"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawalCancelled",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "by",
+            "type": "pubkey"
+          },
+          {
+            "name": "source",
+            "type": {
+              "defined": {
+                "name": "WithdrawSource"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawalExecuted",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "source",
+            "type": {
+              "defined": {
+                "name": "WithdrawSource"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "recipient",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawalRequested",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "source",
+            "type": {
+              "defined": {
+                "name": "WithdrawSource"
+              }
+            }
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "recipient",
+            "type": "pubkey"
+          },
+          {
+            "name": "unlock_at",
+            "type": "i64"
           }
         ]
       }
