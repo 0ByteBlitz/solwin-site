@@ -3,6 +3,7 @@
   "name": "SolWin",
   "summary": "On-chain Solana slot (devnet, play money): a win pays SOL and a non-winning spin can mint $SLW. $SLW is minted only by non-winning spins and can be sold to a program-owned reserve at a fixed floor, subject to a daily cap, which burns it. No promise of value.",
   "updated": "2026-11-18",
+  "built_with": "Built with AI agents: much of this project's code, tests and docs were written with AI coding agents (Claude Code). It is provided as is, with no warranty.",
   "site": "https://0byteblitz.github.io/solwin-site/",
   "docs": {
     "llms_txt": "https://0byteblitz.github.io/solwin-site/llms.txt",

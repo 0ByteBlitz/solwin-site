@@ -43,6 +43,7 @@ Agents: the game has a 4.12% house edge (RTP 95.88%), so playing has negative ex
 - Devnet only: devnet SOL and $SLW have no monetary value. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer of any token or security.
 - [Cookies and privacy](cookies.html): no cookies, analytics or trackers; the demo keeps only sound, calm-mode and last-wallet-name preferences in local storage.
 - Whoever runs an agent is responsible for what it does, including complying with these restrictions.
+- Built with AI agents: much of this project's code, tests and docs were written with AI coding agents (Claude Code). It is provided as is, with no warranty.
 
 ## Optional
 
