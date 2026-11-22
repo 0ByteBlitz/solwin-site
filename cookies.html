@@ -56,13 +56,15 @@
         </nav>
 
         <h2 id="storage">Browser storage (the demo only)</h2>
-        <p>The web app at <a href="play/">/play/</a> keeps a few preferences in your browser's <strong>local storage</strong> so they survive a reload. They never leave your device: nothing reads them except the app in your own browser. The site's other pages store nothing.</p>
+        <p>The web app at <a href="play/">/play/</a> keeps a few settings and records in your browser's <strong>local storage</strong> so they survive a reload. They never leave your device: nothing reads them except the app in your own browser. The site's other pages store nothing.</p>
         <div class="table-wrap">
           <table>
             <thead><tr><th>Key</th><th>What it holds</th><th>Why</th></tr></thead>
             <tbody>
               <tr><td><code>solwin.sound</code></td><td><code>1</code> or <code>0</code></td><td>Remembers whether you turned sound effects on or off.</td></tr>
               <tr><td><code>solwin.calm</code></td><td><code>1</code> or <code>0</code></td><td>Remembers calm mode (no shake, no flashes, fewer particles).</td></tr>
+              <tr><td><code>solwin.age-ack</code></td><td>Your age tick and the terms version you confirmed</td><td>Remembers you confirmed you are 18 or over, so you are not asked again. No wallet connects until you tick.</td></tr>
+              <tr><td>Spin in progress record</td><td>A record of any spin in progress, which can identify that spin on the blockchain</td><td>Lets the spin be recovered after a reload. No server copy.</td></tr>
               <tr><td><code>solwin.wallet</code> (<code>walletName</code> in older builds)</td><td>The name of the wallet you last connected, such as "Phantom"</td><td>Reconnects the same wallet next time. Never an address, key or balance.</td></tr>
             </tbody>
           </table>
@@ -80,10 +82,15 @@
 
         <h2 id="personal-data">Personal data</h2>
         <ul>
-          <li>We collect <strong>no personal data</strong>: there are no accounts, sign-ups, email lists or contact forms (the site's security policy blocks form submissions altogether).</li>
-          <li>We don't sell, share or profile anything, because we don't have anything.</li>
-          <li>We don't look up your location. That's also why <a href="legal.html#restricted">country restrictions</a> are terms of use rather than an automatic block.</li>
+          <li>SolWin has no cookies, no analytics, no backend and no accounts, and collects no personal data itself. Personal data collected by us: none.</li>
+          <li>The site host can see your IP address. The Solana devnet RPC provider can see your IP address, your wallet address and the requests the app makes. We do not receive their logs. They and your wallet provider have their own policies. No wallet connects until you tick the 18+ box.</li>
+          <li>You may have rights over personal data where you live. We hold none we can access or delete, so ask the third parties above about their logs. Nothing here limits any right you have under the law where you live.</li>
+          <li>SolWin is for people 18 or over.</li>
         </ul>
+
+        <h2 id="restricted">Where it is not available</h2>
+        <p>Not available where prohibited by law.</p>
+        <p>Do not use SolWin if the law where you live prohibits it.</p>
 
         <h2 id="blockchain">The blockchain is public</h2>
         <p>If you send a transaction on devnet (create a profile, set limits, spin, sell $SLW), it's recorded on a public blockchain together with your wallet address. Anyone can read it, it's permanent, and nobody, including us, can delete it. Your player profile account (limits, self-exclusion, totals) is public on-chain in the same way.</p>
@@ -96,7 +103,7 @@
         </ul>
 
         <h2 id="changes">Changes</h2>
-        <p>If what we store or who your browser talks to changes, this page changes first, and anything optional will need your consent before it's used. Questions about security or privacy: open a <a href="https://github.com/0ByteBlitz/solwin-site/security/advisories/new" rel="noopener noreferrer">private advisory</a>. See also <a href="legal.html">legal and restrictions</a>.</p>
+        <p>If what we store or who your browser talks to changes, this page changes first, and anything optional will need your consent before it's used. Questions about security or privacy: open a <a href="https://github.com/0ByteBlitz/solwin-site/security/advisories/new" rel="noopener noreferrer">private advisory</a>. See also <a href="legal.html">Terms of Use and Privacy Notice</a>.</p>
       </div>
     </section>
   </main>
@@ -104,7 +111,7 @@
   <footer class="site-footer">
     <div class="wrap">
       <nav aria-label="Footer"><a href="./">Home</a><a href="slw.html">$SLW</a><a href="agents.html">Agents</a><a href="play/">Play demo</a><a href="legal.html">Legal</a><a href="cookies.html">Cookies</a><a href="llms.txt">llms.txt</a><a href="agents.json">agents.json</a></nav>
-      <p>SolWin runs on Solana devnet with play money. It is not licensed or regulated by any authority. 18+ only, and not available in <a href="legal.html#restricted">restricted jurisdictions</a>. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer. No cookies, no tracking. Gambling can be addictive: <a href="legal.html#help">get help</a>.</p>
+      <p>SolWin runs on Solana devnet with play money. It is not licensed or regulated by any authority. 18+ only, and <a href="legal.html#restricted">not available where prohibited by law</a>. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer. No cookies, no tracking. Gambling can be addictive: <a href="legal.html#help">get help</a>.</p>
       <div class="bigmark" aria-hidden="true">SolWin</div>
     </div>
   </footer>

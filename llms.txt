@@ -39,7 +39,7 @@ Agents: the game has a 4.12% house edge (RTP 95.88%), so playing has negative ex
 ## Legal
 
 - Not licensed or regulated by any gambling, financial or other authority, anywhere; none of the protections of a regulated service apply.
-- [Legal and restrictions](legal.html): 18+ (or the local gambling age if higher); not available in the United States, United Kingdom, France, the Netherlands, Spain, Australia, Ontario, Singapore, sanctioned countries and regions, or anywhere online gambling or crypto gaming is prohibited. No VPNs to get around this.
+- [Terms of Use and Privacy Notice](legal.html): 18+ only. Devnet play money, no value, no warranty. Not available where prohibited by law.
 - Devnet only: devnet SOL and $SLW have no monetary value. Provided as is, with no warranty and no liability. Nothing here is financial advice or an offer of any token or security.
 - [Cookies and privacy](cookies.html): no cookies, analytics or trackers; the demo keeps only sound, calm-mode and last-wallet-name preferences in local storage.
 - Whoever runs an agent is responsible for what it does, including complying with these restrictions.
