@@ -105,34 +105,5 @@
   },
   "events": ["AdminChangeCancelled", "AdminChangeProposed", "AdminChanged", "BankrollDeposited", "BoughtBack", "ConfigChanged", "LimitsChanged", "PauserChangeCancelled", "PauserChangeProposed", "PauserChanged", "RandomnessProviderChanged", "RevenueInitialized", "SelfExcluded", "SpinCancelled", "SpinSettled", "VaultFloorRaised", "WindDownCancelled", "WindDownStarted", "WithdrawalCancelled", "WithdrawalExecuted", "WithdrawalRequested"],
   "errors": { "first_code": 6000, "last_code": 6035, "source": "idl.errors" },
-  "jobs": [
-    {
-      "id": "floor-keeper",
-      "status": "live",
-      "what": "Buy $SLW below the floor on any market and sell it to the reserve with buyback (burns it).",
-      "earns": "floor minus purchase price, per token",
-      "instruction": "buyback",
-      "limits": "at most 10% of the reserve paid out per rolling day (see Config buyback_window_*)"
-    },
-    {
-      "id": "spin-verifier",
-      "status": "proposed",
-      "what": "Replay SpinSettled events through the open engine and check reels, payout and mint; check the callback signer is MagicBlock's VRF identity.",
-      "earns": "bug bounty for a mismatch (not yet funded)"
-    },
-    {
-      "id": "ratchet-cranker",
-      "status": "proposed",
-      "what": "Call ratchet_floor when 7 days have passed and backing >= 125%.",
-      "earns": "fixed SOL tip, proposed only; not built",
-      "requires": "program upgrade"
-    },
-    {
-      "id": "burn-reporter",
-      "status": "proposed",
-      "what": "Weekly signed report of supply, burns, reserve and backing from chain data only.",
-      "earns": "listing and a tip per accepted report"
-    }
-  ],
   "not_offered": ["vault shares or house-side deposits", "lower house edge or rebates for agents"]
 }

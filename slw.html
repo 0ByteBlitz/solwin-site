@@ -60,7 +60,7 @@
           <div class="stat"><div class="value" id="live-circ">–</div><div class="label">Circulating (minted − burned)</div></div>
           <div class="stat"><div class="value violet" id="live-floor">–</div><div class="label">Floor price, SOL per $SLW</div></div>
           <div class="stat"><div class="value" id="live-reserve">–</div><div class="label">SOL in the buyback reserve</div></div>
-          <div class="stat"><div class="value lime" id="live-backing">–</div><div class="label">Backing: reserve ÷ (circulating × floor)</div></div>
+          <div class="stat"><div class="value lime" id="live-backing">–</div><div class="label">Reserve ÷ (circulating × floor), live, not a guarantee</div></div>
         </div>
         <p class="small muted" id="live-era"></p>
       </div>
@@ -180,7 +180,7 @@
         <h2 id="backing">The SOL reserve</h2>
         <p class="section-lede">6% of every bet goes to the buyback reserve. On average, a SOL of bets mints $SLW worth 0.0593 SOL at the floor, and the reserve receives 0.06 SOL for it: across all bets, the reserve takes in slightly more than the floor value it has to back. That&#39;s an average, not a per-spin guarantee: a single losing spin can mint up to 0.2 SOL of floor value from a 0.06 SOL contribution, so early on, or after a lucky run, the reserve can hold less than every token&#39;s floor value. Redemptions are paid only from what the reserve holds, within its daily cap.</p>
         <div class="grid three">
-          <div class="stat"><div class="value lime">0.0002</div><div class="label">SOL per $SLW: the floor. Fixed at launch; no admin setting can change it.</div></div>
+          <div class="stat"><div class="value lime">0.0002</div><div class="label">SOL per $SLW: the floor. Fixed in the current build.</div></div>
           <div class="stat"><div class="value">101%</div><div class="label">average backing in era 0 (0.06 in ÷ 0.0593 minted, per SOL wagered)</div></div>
           <div class="stat"><div class="value violet">10%</div><div class="label">of the reserve can be paid out per rolling day, so no one empties it in a block</div></div>
         </div>
@@ -190,39 +190,17 @@
     <section aria-labelledby="burn" id="burn">
       <div class="wrap">
         <h2>Buyback &amp; burn</h2>
-        <p class="section-lede">Three ways $SLW leaves circulation. The first works today; the others are designed and need a program upgrade, an audit and, for the last one, legal advice.</p>
-        <div class="grid three">
+        <p class="section-lede">$SLW burns when it is sold to the reserve at the floor. This works today.</p>
+        <div class="grid two">
           <div class="card job">
             <h3>Floor redemption <span class="badge live">Live</span></h3>
             <p>Sell any amount to the reserve at the floor with <code>buyback</code>, subject to a daily cap (at most 10% of the reserve per rolling day). The tokens burn in the same instruction. Works while the game is paused and while you're self-excluded.</p>
-            <p>If the market dips below the floor, anyone can buy and redeem within the daily cap. It's the first job we offer <a href="agents.html">agents</a>. No price is promised.</p>
-          </div>
-          <div class="card job">
-            <h3>Floor ratchet <span class="badge proposed">Proposed</span></h3>
-            <p>From era 1 the reserve grows faster than the tokens it backs. A permissionless <code>ratchet_floor</code> raises the floor by up to 5% a week while backing stays ≥ 125%, never above 0.0002 × 2<sup>era</sup>, and never down.</p>
-            <p>Proposed only. The floor is fixed in the current build.</p>
-          </div>
-          <div class="card job">
-            <h3>Revenue buyback <span class="badge proposed">Phase 2</span></h3>
-            <p>When the market is above the floor nobody redeems. Then 20% of the vault's monthly profit above its solvency target buys $SLW on the market and burns it: by the multisig first, with every transaction published, and on-chain only after an audited DEX integration.</p>
+            <p>The floor is fixed in the current build. No market price is promised.</p>
           </div>
         </div>
 
-        <h3 class="spaced">The ratchet rule</h3>
-<pre><code>circulating  = total_minted − total_burned          // both already on-chain
-backing      = reserve ÷ (circulating × floor)
-ceiling(era) = 0.0002 SOL × 2^era
-
-ratchet_floor()   // anyone can call it
-  require now − last_ratchet ≥ 7 days
-  require backing ≥ 125%
-  new = min(floor × 1.05, ceiling(era), reserve ÷ (circulating × 1.25))
-  require new &gt; floor                               // the floor never goes down
-  floor = new</code></pre>
-
         <div class="grid two spaced-grid">
-          <div class="card"><h3>Sinks on the roadmap <span class="badge proposed">Proposed</span></h3><p><b>Spin credits:</b> burn $SLW for a bet worth its floor value. <b>Jackpot tickets:</b> burn a fixed amount for one extra jackpot draw, a pure burn that raises backing for every other holder.</p></div>
-          <div class="callout warn"><p><strong>What's promised, and what isn't.</strong> The code promises the cap, minting only on non-winning spins, redemption at the floor, the daily cap and burning on redemption. It promises no market price above the floor and no return. The game has a 4.12% house edge.</p></div>
+          <div class="callout warn"><p><strong>What's promised, and what isn't.</strong> The code promises the cap, minting only on non-winning spins, redemption at the floor, the daily cap and burning on redemption. It promises no market price and no return. The game has a 4.12% house edge.</p></div>
         </div>
       </div>
     </section>
